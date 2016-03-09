@@ -1,0 +1,8 @@
+.idea
+src/github.com
+src/golang.org
+src/gopkg.in
+bin
+pkg
+env
+src/depositregws/service_test.yml
