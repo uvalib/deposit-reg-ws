@@ -5,12 +5,15 @@ import (
     _ "github.com/go-sql-driver/mysql"
     "depositregws/api"
     "log"
+    "strconv"
 )
 
 type Datastore interface {
     Check( ) error
     Get( id string ) ( [] * api.Registration, error )
 //    Search( ) ( [ ] * api.Registration, error )
+    Create( reg api.Registration ) ( * api.Registration, error )
+    Delete( id string ) error
 }
 
 type DB struct {
@@ -47,6 +50,47 @@ func ( db *DB ) Get( id string ) ( [] * api.Registration, error ) {
     defer rows.Close( )
 
     return makeResults( rows )
+}
+
+func ( db *DB ) Create( reg api.Registration ) ( * api.Registration, error ) {
+
+    stmt, err := db.Prepare( "INSERT INTO depositrequest( user, school, degree ) VALUES(?,?,?)" )
+    if err != nil {
+        return nil, err
+    }
+
+    res, err := stmt.Exec( reg.For, reg.School, reg.Degree )
+    if err != nil {
+        return nil, err
+    }
+
+    lastId, err := res.LastInsertId( )
+    if err != nil {
+        return nil, err
+    }
+
+    reg.Id = strconv.FormatInt( lastId, 10 )
+    return &reg, nil
+}
+
+func ( db *DB ) Delete( id string ) ( int64, error ) {
+
+    stmt, err := db.Prepare( "DELETE FROM depositrequest WHERE id = ? LIMIT 1" )
+    if err != nil {
+        return 0, err
+    }
+
+    res, err := stmt.Exec( id )
+    if err != nil {
+        return 0, err
+    }
+
+    rowCount, err := res.RowsAffected( )
+    if err != nil {
+        return 0, err
+    }
+
+    return rowCount, nil
 }
 
 func makeResults( rows * sql.Rows ) ( [] * api.Registration, error ) {

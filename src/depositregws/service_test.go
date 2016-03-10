@@ -24,6 +24,10 @@ var goodToken = cfg.Token
 var badToken = "badness"
 var empty = " "
 
+//
+// healthcheck tests
+//
+
 func TestHealthCheck( t *testing.T ) {
     expected := http.StatusOK
     status := client.HealthCheck( cfg.Endpoint )
@@ -31,6 +35,10 @@ func TestHealthCheck( t *testing.T ) {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
 }
+
+//
+// get tests
+//
 
 func TestGetHappyDay( t *testing.T ) {
     expected := http.StatusOK
@@ -65,6 +73,81 @@ func TestGetBadToken( t *testing.T ) {
     }
 }
 
+//
+// search tests
+//
+
+//
+// create tests
+//
+
+func TestCreateHappyDay( t *testing.T ) {
+    reg := makeRegistration( )
+    expected := http.StatusOK
+    status, _ := client.Create( cfg.Endpoint, reg, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
+func TestCreateBadRegistration( t *testing.T ) {
+    expected := http.StatusBadRequest
+    status, _ := client.Create( cfg.Endpoint, api.Registration{ }, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
+func TestCreateBadToken( t *testing.T ) {
+    reg := makeRegistration( )
+    expected := http.StatusForbidden
+    status, _ := client.Create( cfg.Endpoint, reg, badToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
+//
+// update tests
+//
+
+//
+// delete tests
+//
+
+func TestDeleteHappyDay( t *testing.T ) {
+    newId := createNewReg( t )
+    expected := http.StatusOK
+    status := client.Delete( cfg.Endpoint, newId, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
+func TestDeleteEmptyId( t *testing.T ) {
+    expected := http.StatusBadRequest
+    status := client.Delete( cfg.Endpoint, empty, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
+func TestDeleteNotFoundId( t *testing.T ) {
+    expected := http.StatusNotFound
+    status := client.Delete( cfg.Endpoint, notFoundId, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
+func TestDeleteBadToken( t *testing.T ) {
+    expected := http.StatusForbidden
+    status := client.Delete( cfg.Endpoint, goodId, badToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
 func ensureValidDetails( t *testing.T, details [] * api.Registration ) {
 
     for _, e := range details {
@@ -79,8 +162,29 @@ func ensureValidDetails( t *testing.T, details [] * api.Registration ) {
     }
 }
 
+func createNewReg( t *testing.T ) string {
+    reg := makeRegistration( )
+    expected := http.StatusOK
+    status, result := client.Create( cfg.Endpoint, reg, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+    if result == nil {
+        t.Fatalf( "No registration details returned" )
+    }
+
+    return result.Id
+}
+
 func emptyField( field string ) bool {
     return len( strings.TrimSpace( field ) ) == 0
+}
+
+func makeRegistration( ) api.Registration {
+    return api.Registration{
+        For: "dpg3k",
+        School: "Engineering",
+        Degree: "Ph.D" }
 }
 
 func loadConfig( ) TestConfig {
@@ -95,8 +199,8 @@ func loadConfig( ) TestConfig {
         log.Fatal( err )
     }
 
-    log.Printf( "endpoint [%s]\n", c.Endpoint )
-    log.Printf( "token    [%s]\n", c.Token )
+    log.Printf( "Test config; endpoint   [%s]\n", c.Endpoint )
+    log.Printf( "Test config; auth token [%s]\n", c.Token )
 
     return c
 }

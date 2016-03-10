@@ -35,30 +35,31 @@ var routes = Routes{
         "RegistrationSearch",
         "GET",
         "/",
-        RegistrationSearch,
+        handlers.RegistrationSearch,
     },
-
+*/
     Route{
         "RegistrationCreate",
         "POST",
         "/",
-        RegistrationCreate,
+        handlers.RegistrationCreate,
     },
 
+    /*
     Route{
         "RegistrationUpdate",
         "PUT",
         "/{id}",
-        RegistrationUpdate,
+        handlers.RegistrationUpdate,
     },
 
+    */
     Route{
         "RegistrationDelete",
-        "DEL",
+        "DELETE",
         "/{id}",
-        RegistrationDelete,
+        handlers.RegistrationDelete,
     },
-    */
 }
 
 func NewRouter( ) *mux.Router {
