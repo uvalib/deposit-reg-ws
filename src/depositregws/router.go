@@ -1,8 +1,9 @@
 package main
 
 import (
-   "net/http"
-   "github.com/gorilla/mux"
+    "net/http"
+    "depositregws/handlers"
+    "github.com/gorilla/mux"
 )
 
 type Route struct {
@@ -20,14 +21,14 @@ var routes = Routes{
         "HealthCheck",
         "GET",
         "/healthcheck",
-        HealthCheck,
+        handlers.HealthCheck,
     },
 
     Route{
         "RegistrationGet",
         "GET",
         "/{id}",
-        RegistrationGet,
+        handlers.RegistrationGet,
     },
 /*
     Route{

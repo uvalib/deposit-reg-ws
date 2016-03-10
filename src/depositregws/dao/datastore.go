@@ -17,15 +17,18 @@ type DB struct {
     *sql.DB
 }
 
-func NewDB( dataSourceName string ) ( *DB, error ) {
+var Database * DB
+
+func NewDB( dataSourceName string ) error {
     db, err := sql.Open( "mysql", dataSourceName )
     if err != nil {
-        return nil, err
+        return err
     }
     if err = db.Ping( ); err != nil {
-        return nil, err
+        return err
     }
-    return &DB{ db }, nil
+    Database = &DB{ db }
+    return nil
 }
 
 func ( db *DB ) Check( ) error {
