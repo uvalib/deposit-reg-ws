@@ -9,13 +9,15 @@ import (
     "encoding/json"
 )
 
+var debugHttp = false
+
 func HealthCheck( endpoint string ) int {
 
     url := fmt.Sprintf( "%s/healthcheck", endpoint )
     //fmt.Printf( "%s\n", url )
 
     resp, _, errs := gorequest.New( ).
-       SetDebug( false ).
+       SetDebug( debugHttp ).
        Get( url ).
        Timeout( time.Duration( 5 ) * time.Second ).
        End( )
@@ -35,7 +37,7 @@ func Options( endpoint string ) ( int, * api.Options ) {
     //fmt.Printf( "%s\n", url )
 
     resp, body, errs := gorequest.New( ).
-       SetDebug( false ).
+       SetDebug( debugHttp ).
        Get( url ).
        Timeout( time.Duration( 5 ) * time.Second ).
        End( )
@@ -61,7 +63,7 @@ func Get( endpoint string, id string, token string ) ( int, [] * api.Registratio
     //fmt.Printf( "%s\n", url )
 
     resp, body, errs := gorequest.New( ).
-       SetDebug( false ).
+       SetDebug( debugHttp ).
        Get( url  ).
        Timeout( time.Duration( 5 ) * time.Second ).
        End( )
@@ -85,13 +87,13 @@ func Search( endpoint string, id string, token string ) ( int, [] * api.Registra
     return http.StatusInternalServerError, nil
 }
 
-func Create( endpoint string, reg api.Registration, token string ) ( int, * api.Registration ) {
+func Create( endpoint string, reg api.Registration, token string ) ( int, [] * api.Registration ) {
 
     url := fmt.Sprintf( "%s?auth=%s", endpoint, token )
     //fmt.Printf( "%s\n", url )
 
     resp, body, errs := gorequest.New( ).
-       SetDebug( false ).
+       SetDebug( debugHttp ).
        Post( url  ).
        Send( reg ).
        Timeout( time.Duration( 5 ) * time.Second ).
@@ -110,11 +112,11 @@ func Create( endpoint string, reg api.Registration, token string ) ( int, * api.
         return http.StatusInternalServerError, nil
     }
 
-    if resp.StatusCode == http.StatusOK {
-        return http.StatusOK, r.Details[ 0 ]
-    }
+    //if resp.StatusCode == http.StatusOK {
+    //    return http.StatusOK, r.Details[ 0 ]
+    //}
 
-    return resp.StatusCode, nil
+    return resp.StatusCode, r.Details
 }
 
 func Update( endpoint string, reg api.Registration, token string ) ( int, * api.Registration ) {
@@ -127,7 +129,7 @@ func Delete( endpoint string, id string, token string ) int {
     //fmt.Printf( "%s\n", url )
 
     resp, body, errs := gorequest.New( ).
-       SetDebug( false ).
+       SetDebug( debugHttp ).
        Delete( url  ).
        Timeout( time.Duration( 5 ) * time.Second ).
        End( )

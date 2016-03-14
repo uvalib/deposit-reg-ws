@@ -2,6 +2,7 @@ package api
 
 type Registration struct {
     Id             string   `json:"id,omitempty"`
+    Requester      string   `json:"requester,omitempty"`
     For            string   `json:"for,omitempty"`
     School         string   `json:"school,omitempty"`
     Degree         string   `json:"degree,omitempty"`

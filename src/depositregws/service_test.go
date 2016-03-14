@@ -94,13 +94,34 @@ func TestGetBadToken( t *testing.T ) {
 // create tests
 //
 
-func TestCreateHappyDay( t *testing.T ) {
-    reg := makeRegistration( )
+func TestSingleCreate( t *testing.T ) {
+    reg := makeSingleRegistration( )
     expected := http.StatusOK
-    status, _ := client.Create( cfg.Endpoint, reg, goodToken )
+    status, details := client.Create( cfg.Endpoint, reg, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
+
+    if details == nil || len( details ) != 1 {
+        t.Fatalf( "Incomplete registration details returned" )
+    }
+
+    ensureValidRegistrations( t, details )
+}
+
+func TestMultiCreate( t *testing.T ) {
+    reg := makeMultiRegistration( )
+    expected := http.StatusOK
+    status, details := client.Create( cfg.Endpoint, reg, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+
+    if details == nil || len( details ) != 2 {
+        t.Fatalf( "Incomplete registration details returned" )
+    }
+
+    ensureValidRegistrations( t, details )
 }
 
 func TestCreateBadRegistration( t *testing.T ) {
@@ -112,7 +133,7 @@ func TestCreateBadRegistration( t *testing.T ) {
 }
 
 func TestCreateBadToken( t *testing.T ) {
-    reg := makeRegistration( )
+    reg := makeSingleRegistration( )
     expected := http.StatusForbidden
     status, _ := client.Create( cfg.Endpoint, reg, badToken )
     if status != expected {
@@ -165,11 +186,12 @@ func ensureValidRegistrations( t *testing.T, details [] * api.Registration ) {
 
     for _, e := range details {
         if emptyField( e.Id ) ||
+           emptyField( e.Requester ) ||
            emptyField( e.For ) ||
            emptyField( e.School ) ||
-           emptyField( e.Degree ) ||
-           emptyField( e.RequestDate ) ||
-           emptyField( e.Status ) {
+           emptyField( e.Degree ) {
+           //emptyField( e.RequestDate ) ||
+           //emptyField( e.Status ) {
             t.Fatalf( "Expected non-empty field but one is empty\n" )
         }
     }
@@ -190,26 +212,35 @@ func ensureValidOptions( t *testing.T, options * api.Options ) {
 }
 
 func createNewReg( t *testing.T ) string {
-    reg := makeRegistration( )
+    reg := makeSingleRegistration( )
     expected := http.StatusOK
-    status, result := client.Create( cfg.Endpoint, reg, goodToken )
+    status, results := client.Create( cfg.Endpoint, reg, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
-    if result == nil {
-        t.Fatalf( "No registration details returned" )
+    if results == nil || len( results ) != 1 {
+        t.Fatalf( "Incomplete registration details returned" )
     }
 
-    return result.Id
+    return results[ 0 ].Id
 }
 
 func emptyField( field string ) bool {
     return len( strings.TrimSpace( field ) ) == 0
 }
 
-func makeRegistration( ) api.Registration {
+func makeSingleRegistration( ) api.Registration {
     return api.Registration{
         For: "dpg3k",
+        Requester: "dpg3k",
+        School: "Engineering",
+        Degree: "Ph.D" }
+}
+
+func makeMultiRegistration( ) api.Registration {
+    return api.Registration{
+        For: "dpg3k, tss6n",
+        Requester: "dpg3k",
         School: "Engineering",
         Degree: "Ph.D" }
 }

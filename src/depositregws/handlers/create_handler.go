@@ -3,6 +3,7 @@ package handlers
 import (
     "log"
     "fmt"
+    "strings"
     "net/http"
     "encoding/json"
 //    "github.com/gorilla/mux"
@@ -36,18 +37,27 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
         return
     }
 
-    // get the request details
-    rg, err := dao.Database.Create( reg )
-    if err != nil {
-        log.Println( err )
-        EncodeStandardResponse( w, http.StatusInternalServerError,
-            fmt.Sprintf( "%s (%s)", http.StatusText( http.StatusInternalServerError ), err ),
-            nil )
-        return
+    // create results list
+    results := make([ ] * api.Registration, 0 )
+
+    // split the user list of appropriate
+    users := strings.Split( reg.For, "," )
+
+    for _, u := range users {
+
+        reg.For = strings.TrimSpace( u )
+        rg, err := dao.Database.Create( reg )
+        if err != nil {
+            log.Println(err)
+            EncodeStandardResponse(w, http.StatusInternalServerError,
+                fmt.Sprintf("%s (%s)", http.StatusText(http.StatusInternalServerError), err),
+                nil)
+            return
+        }
+
+        results = append(results, rg)
     }
 
-    results := make([ ] * api.Registration, 0 )
-    results = append( results, rg )
     EncodeStandardResponse( w, http.StatusOK, http.StatusText( http.StatusOK ), results )
 }
 

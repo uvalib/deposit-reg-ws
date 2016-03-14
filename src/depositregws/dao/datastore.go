@@ -54,12 +54,12 @@ func ( db *DB ) Get( id string ) ( [] * api.Registration, error ) {
 
 func ( db *DB ) Create( reg api.Registration ) ( * api.Registration, error ) {
 
-    stmt, err := db.Prepare( "INSERT INTO depositrequest( user, school, degree ) VALUES(?,?,?)" )
+    stmt, err := db.Prepare( "INSERT INTO depositrequest( requester, user, school, degree ) VALUES(?,?,?,?)" )
     if err != nil {
         return nil, err
     }
 
-    res, err := stmt.Exec( reg.For, reg.School, reg.Degree )
+    res, err := stmt.Exec( reg.Requester, reg.For, reg.School, reg.Degree )
     if err != nil {
         return nil, err
     }
@@ -100,7 +100,14 @@ func makeResults( rows * sql.Rows ) ( [] * api.Registration, error ) {
     results := make([ ] * api.Registration, 0 )
     for rows.Next() {
         reg := new( api.Registration )
-        err := rows.Scan( &reg.Id, &reg.For, &reg.School, &reg.Degree, &reg.Status, &reg.RequestDate, &optional )
+        err := rows.Scan( &reg.Id,
+            &reg.Requester,
+            &reg.For,
+            &reg.School,
+            &reg.Degree,
+            &reg.Status,
+            &reg.RequestDate,
+            &optional )
         if err != nil {
             return nil, err
         }
