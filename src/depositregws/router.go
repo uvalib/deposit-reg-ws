@@ -45,6 +45,13 @@ var routes = Routes{
         handlers.RegistrationCreate,
     },
 
+    Route{
+        "RegistrationCreate",
+        "OPTIONS",
+        "/",
+        handlers.RegistrationCreateOptions,
+    },
+
     /*
     Route{
         "RegistrationUpdate",
@@ -60,6 +67,7 @@ var routes = Routes{
         "/{id}",
         handlers.RegistrationDelete,
     },
+
 }
 
 func NewRouter( ) *mux.Router {

@@ -50,3 +50,8 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
     results = append( results, rg )
     EncodeStandardResponse( w, http.StatusOK, http.StatusText( http.StatusOK ), results )
 }
+
+func RegistrationCreateOptions( w http.ResponseWriter, r *http.Request ) {
+    w.Header( ).Add( "Access-Control-Allow-Methods", "POST" )
+    EncodeStandardResponse( w, http.StatusOK, http.StatusText( http.StatusOK ), nil )
+}
