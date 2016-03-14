@@ -37,6 +37,19 @@ func TestHealthCheck( t *testing.T ) {
 }
 
 //
+// options tests
+//
+
+func TestOptionsHappyDay( t *testing.T ) {
+    expected := http.StatusOK
+    status, options := client.Options( cfg.Endpoint )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+    ensureValidOptions( t, options )
+}
+
+//
 // get tests
 //
 
@@ -46,7 +59,7 @@ func TestGetHappyDay( t *testing.T ) {
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
-    ensureValidDetails( t, details )
+    ensureValidRegistrations( t, details )
 }
 
 func TestGetEmptyId( t *testing.T ) {
@@ -148,7 +161,7 @@ func TestDeleteBadToken( t *testing.T ) {
     }
 }
 
-func ensureValidDetails( t *testing.T, details [] * api.Registration ) {
+func ensureValidRegistrations( t *testing.T, details [] * api.Registration ) {
 
     for _, e := range details {
         if emptyField( e.Id ) ||
@@ -158,6 +171,20 @@ func ensureValidDetails( t *testing.T, details [] * api.Registration ) {
            emptyField( e.RequestDate ) ||
            emptyField( e.Status ) {
             t.Fatalf( "Expected non-empty field but one is empty\n" )
+        }
+    }
+}
+
+func ensureValidOptions( t *testing.T, options * api.Options ) {
+
+    for _, f := range options.School {
+        if emptyField( f ) {
+            t.Fatalf( "Expected non-empty school field but one is empty\n" )
+        }
+    }
+    for _, f := range options.Degree {
+        if emptyField( f ) {
+            t.Fatalf( "Expected non-empty degree field but one is empty\n" )
         }
     }
 }

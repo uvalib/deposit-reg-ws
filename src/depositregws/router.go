@@ -25,6 +25,13 @@ var routes = Routes{
     },
 
     Route{
+        "OptionsGet",
+        "GET",
+        "/options",
+        handlers.OptionsGet,
+    },
+
+    Route{
         "RegistrationGet",
         "GET",
         "/{id}",

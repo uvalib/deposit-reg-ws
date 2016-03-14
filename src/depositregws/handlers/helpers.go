@@ -19,6 +19,16 @@ func EncodeStandardResponse( w http.ResponseWriter, status int, message string, 
     }
 }
 
+func EncodeOptionsResponse( w http.ResponseWriter, status int, message string, options * api.Options ) {
+
+    jsonAttributes( w )
+    coorsAttributes( w )
+    w.WriteHeader( status )
+    if err := json.NewEncoder(w).Encode( api.OptionsResponse{ Status: status, Message: message, Options: options } ); err != nil {
+        log.Fatal( err )
+    }
+}
+
 func EncodeHealthCheckResponse( w http.ResponseWriter, status int, message string ) {
     healthy := status == http.StatusOK
     jsonAttributes( w )
@@ -43,4 +53,8 @@ func jsonResponse( w http.ResponseWriter ) {
 
 func NotEmpty( param string ) bool {
     return len( strings.TrimSpace( param ) ) != 0
+}
+
+func StatusHelper( status int ) ( int, string ) {
+    return status, http.StatusText( status )
 }

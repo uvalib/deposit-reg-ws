@@ -29,6 +29,32 @@ func HealthCheck( endpoint string ) int {
     return resp.StatusCode
 }
 
+func Options( endpoint string ) ( int, * api.Options ) {
+
+    url := fmt.Sprintf( "%s/options", endpoint )
+    //fmt.Printf( "%s\n", url )
+
+    resp, body, errs := gorequest.New( ).
+       SetDebug( false ).
+       Get( url ).
+       Timeout( time.Duration( 5 ) * time.Second ).
+       End( )
+
+    if errs != nil {
+        return http.StatusInternalServerError, nil
+    }
+
+    defer resp.Body.Close( )
+
+    r := api.OptionsResponse{ }
+    err := json.Unmarshal( []byte( body ), &r )
+    if err != nil {
+        return http.StatusInternalServerError, nil
+    }
+
+    return resp.StatusCode, r.Options
+}
+
 func Get( endpoint string, id string, token string ) ( int, [] * api.Registration ) {
 
     url := fmt.Sprintf( "%s/%s?auth=%s", endpoint, id, token )
