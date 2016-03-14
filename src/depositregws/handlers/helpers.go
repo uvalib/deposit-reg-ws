@@ -54,7 +54,3 @@ func jsonResponse( w http.ResponseWriter ) {
 func NotEmpty( param string ) bool {
     return len( strings.TrimSpace( param ) ) != 0
 }
-
-func StatusHelper( status int ) ( int, string ) {
-    return status, http.StatusText( status )
-}

@@ -84,7 +84,29 @@ func Get( endpoint string, id string, token string ) ( int, [] * api.Registratio
 }
 
 func Search( endpoint string, id string, token string ) ( int, [] * api.Registration ) {
-    return http.StatusInternalServerError, nil
+
+    url := fmt.Sprintf( "%s?auth=%s&later=%s", endpoint, token, id )
+    //fmt.Printf( "%s\n", url )
+
+    resp, body, errs := gorequest.New( ).
+       SetDebug( debugHttp ).
+       Get( url  ).
+       Timeout( time.Duration( 5 ) * time.Second ).
+       End( )
+
+    if errs != nil {
+        return http.StatusInternalServerError, nil
+    }
+
+    defer resp.Body.Close( )
+
+    r := api.StandardResponse{ }
+    err := json.Unmarshal( []byte( body ), &r )
+    if err != nil {
+        return http.StatusInternalServerError, nil
+    }
+
+    return resp.StatusCode, r.Details
 }
 
 func Create( endpoint string, reg api.Registration, token string ) ( int, [] * api.Registration ) {

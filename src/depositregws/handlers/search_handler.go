@@ -4,20 +4,19 @@ import (
     "log"
     "fmt"
     "net/http"
-    "github.com/gorilla/mux"
+    //"github.com/gorilla/mux"
     "depositregws/authtoken"
     "depositregws/config"
     "depositregws/dao"
 )
 
-func RegistrationGet( w http.ResponseWriter, r *http.Request ) {
+func RegistrationSearch( w http.ResponseWriter, r *http.Request ) {
 
-    vars := mux.Vars( r )
-    id := vars[ "id" ]
     token := r.URL.Query( ).Get( "auth" )
+    id := r.URL.Query( ).Get( "later" )
 
     // parameters OK ?
-    if NotEmpty( id ) == false || NotEmpty( token ) == false {
+    if NotEmpty( token ) == false || NotEmpty( id ) == false {
         status := http.StatusBadRequest
         EncodeStandardResponse( w, status, http.StatusText( status ), nil )
         return
@@ -31,7 +30,7 @@ func RegistrationGet( w http.ResponseWriter, r *http.Request ) {
     }
 
     // get the request details
-    reqs, err := dao.Database.Get( id )
+    reqs, err := dao.Database.Search( id )
     if err != nil {
         log.Println( err )
         status := http.StatusInternalServerError

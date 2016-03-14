@@ -37,14 +37,14 @@ var routes = Routes{
         "/{id}",
         handlers.RegistrationGet,
     },
-/*
+
     Route{
         "RegistrationSearch",
         "GET",
         "/",
         handlers.RegistrationSearch,
     },
-*/
+
     Route{
         "RegistrationCreate",
         "POST",

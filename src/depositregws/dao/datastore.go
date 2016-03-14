@@ -11,7 +11,7 @@ import (
 type Datastore interface {
     Check( ) error
     Get( id string ) ( [] * api.Registration, error )
-//    Search( ) ( [ ] * api.Registration, error )
+    Search( id string ) ( [ ] * api.Registration, error )
     Create( reg api.Registration ) ( * api.Registration, error )
     Delete( id string ) error
 }
@@ -44,6 +44,17 @@ func ( db *DB ) Check( ) error {
 func ( db *DB ) Get( id string ) ( [] * api.Registration, error ) {
 
     rows, err := db.Query( "SELECT * FROM depositrequest WHERE id = ? LIMIT 1", id )
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close( )
+
+    return makeResults( rows )
+}
+
+func ( db *DB ) Search( id string ) ( [] * api.Registration, error ) {
+
+    rows, err := db.Query( "SELECT * FROM depositrequest WHERE id > ?", id )
     if err != nil {
         return nil, err
     }

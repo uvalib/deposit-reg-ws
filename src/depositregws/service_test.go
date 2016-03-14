@@ -90,6 +90,31 @@ func TestGetBadToken( t *testing.T ) {
 // search tests
 //
 
+func TestSearchHappyDay( t *testing.T ) {
+    expected := http.StatusOK
+    status, details := client.Search( cfg.Endpoint, goodId, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+    ensureValidRegistrations( t, details )
+}
+
+func TestSearchEmptyId( t *testing.T ) {
+    expected := http.StatusBadRequest
+    status, _ := client.Search( cfg.Endpoint, empty, goodToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
+func TestSearchBadToken( t *testing.T ) {
+    expected := http.StatusForbidden
+    status, _ := client.Search( cfg.Endpoint, goodId, badToken )
+    if status != expected {
+        t.Fatalf( "Expected %v, got %v\n", expected, status )
+    }
+}
+
 //
 // create tests
 //

@@ -28,6 +28,6 @@ func OptionsGet( w http.ResponseWriter, r *http.Request ) {
     degrees := []string{"Graduate","Masters","Ph.D"}
     options := api.Options{ School: schools, Degree: degrees }
 
-    status, msg := StatusHelper( http.StatusOK )
-    EncodeOptionsResponse( w, status, msg, &options )
+    status := http.StatusOK
+    EncodeOptionsResponse( w, status, http.StatusText( status ), &options )
 }

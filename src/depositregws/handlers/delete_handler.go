@@ -18,13 +18,15 @@ func RegistrationDelete( w http.ResponseWriter, r *http.Request ) {
 
     // parameters OK ?
     if NotEmpty( id ) == false || NotEmpty( token ) == false {
-        EncodeStandardResponse( w, http.StatusBadRequest, http.StatusText( http.StatusBadRequest ), nil )
+        status := http.StatusBadRequest
+        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
         return
     }
 
     // validate the token
     if authtoken.Validate( config.Configuration.AuthTokenEndpoint, token ) == false {
-        EncodeStandardResponse( w, http.StatusForbidden, http.StatusText( http.StatusForbidden ), nil )
+        status := http.StatusForbidden
+        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
         return
     }
 
@@ -32,16 +34,19 @@ func RegistrationDelete( w http.ResponseWriter, r *http.Request ) {
     count, err := dao.Database.Delete( id )
     if err != nil {
         log.Println( err )
-        EncodeStandardResponse( w, http.StatusInternalServerError,
-            fmt.Sprintf( "%s (%s)", http.StatusText( http.StatusInternalServerError ), err ),
+        status := http.StatusInternalServerError
+        EncodeStandardResponse( w, status,
+            fmt.Sprintf( "%s (%s)", http.StatusText( status ), err ),
             nil )
         return
     }
 
     if count == 0 {
-        EncodeStandardResponse( w, http.StatusNotFound, http.StatusText( http.StatusNotFound ), nil )
+        status := http.StatusNotFound
+        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
         return
     }
 
-    EncodeStandardResponse( w, http.StatusOK, http.StatusText( http.StatusOK ), nil )
+    status := http.StatusOK
+    EncodeStandardResponse( w, status, http.StatusText( status ), nil )
 }

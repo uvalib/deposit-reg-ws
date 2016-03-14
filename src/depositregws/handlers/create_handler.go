@@ -19,13 +19,15 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
 
     // parameters OK ?
     if NotEmpty( token ) == false {
-        EncodeStandardResponse( w, http.StatusBadRequest, http.StatusText( http.StatusBadRequest ), nil )
+        status := http.StatusBadRequest
+        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
         return
     }
 
     // validate the token
     if authtoken.Validate( config.Configuration.AuthTokenEndpoint, token ) == false {
-        EncodeStandardResponse( w, http.StatusForbidden, http.StatusText( http.StatusForbidden ), nil )
+        status := http.StatusForbidden
+        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
         return
     }
 
@@ -33,7 +35,8 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
     reg := api.Registration{ }
 
     if err := decoder.Decode( &reg ); err != nil {
-        EncodeStandardResponse( w, http.StatusBadRequest, http.StatusText( http.StatusBadRequest ), nil )
+        status := http.StatusBadRequest
+        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
         return
     }
 
@@ -49,8 +52,9 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
         rg, err := dao.Database.Create( reg )
         if err != nil {
             log.Println(err)
-            EncodeStandardResponse(w, http.StatusInternalServerError,
-                fmt.Sprintf("%s (%s)", http.StatusText(http.StatusInternalServerError), err),
+            status := http.StatusInternalServerError
+            EncodeStandardResponse(w, status,
+                fmt.Sprintf("%s (%s)", http.StatusText( status ), err),
                 nil)
             return
         }
@@ -58,7 +62,8 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
         results = append(results, rg)
     }
 
-    EncodeStandardResponse( w, http.StatusOK, http.StatusText( http.StatusOK ), results )
+    status := http.StatusOK
+    EncodeStandardResponse( w, status, http.StatusText( status ), results )
 }
 
 func RegistrationCreateOptions( w http.ResponseWriter, r *http.Request ) {
