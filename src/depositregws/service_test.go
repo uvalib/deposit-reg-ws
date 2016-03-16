@@ -55,7 +55,7 @@ func TestOptionsHappyDay( t *testing.T ) {
 
 func TestGetHappyDay( t *testing.T ) {
     expected := http.StatusOK
-    status, details := client.Get( cfg.Endpoint, goodId, goodToken )
+    status, details := client.GetDepositRequest( cfg.Endpoint, goodId, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -64,7 +64,7 @@ func TestGetHappyDay( t *testing.T ) {
 
 func TestGetEmptyId( t *testing.T ) {
     expected := http.StatusBadRequest
-    status, _ := client.Get( cfg.Endpoint, empty, goodToken )
+    status, _ := client.GetDepositRequest( cfg.Endpoint, empty, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -72,7 +72,7 @@ func TestGetEmptyId( t *testing.T ) {
 
 func TestGetNotFoundId( t *testing.T ) {
     expected := http.StatusNotFound
-    status, _ := client.Get( cfg.Endpoint, notFoundId, goodToken )
+    status, _ := client.GetDepositRequest( cfg.Endpoint, notFoundId, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -80,7 +80,7 @@ func TestGetNotFoundId( t *testing.T ) {
 
 func TestGetBadToken( t *testing.T ) {
     expected := http.StatusForbidden
-    status, _ := client.Get( cfg.Endpoint, goodId, badToken )
+    status, _ := client.GetDepositRequest( cfg.Endpoint, goodId, badToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -92,7 +92,7 @@ func TestGetBadToken( t *testing.T ) {
 
 func TestSearchHappyDay( t *testing.T ) {
     expected := http.StatusOK
-    status, details := client.Search( cfg.Endpoint, goodId, goodToken )
+    status, details := client.SearchDepositRequest( cfg.Endpoint, goodId, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -101,7 +101,7 @@ func TestSearchHappyDay( t *testing.T ) {
 
 func TestSearchEmptyId( t *testing.T ) {
     expected := http.StatusBadRequest
-    status, _ := client.Search( cfg.Endpoint, empty, goodToken )
+    status, _ := client.SearchDepositRequest( cfg.Endpoint, empty, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -109,7 +109,7 @@ func TestSearchEmptyId( t *testing.T ) {
 
 func TestSearchBadToken( t *testing.T ) {
     expected := http.StatusForbidden
-    status, _ := client.Search( cfg.Endpoint, goodId, badToken )
+    status, _ := client.SearchDepositRequest( cfg.Endpoint, goodId, badToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -122,7 +122,7 @@ func TestSearchBadToken( t *testing.T ) {
 func TestSingleCreate( t *testing.T ) {
     reg := makeSingleRegistration( )
     expected := http.StatusOK
-    status, details := client.Create( cfg.Endpoint, reg, goodToken )
+    status, details := client.CreateDepositRequest( cfg.Endpoint, reg, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -137,7 +137,7 @@ func TestSingleCreate( t *testing.T ) {
 func TestMultiCreate( t *testing.T ) {
     reg := makeMultiRegistration( )
     expected := http.StatusOK
-    status, details := client.Create( cfg.Endpoint, reg, goodToken )
+    status, details := client.CreateDepositRequest( cfg.Endpoint, reg, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -151,7 +151,7 @@ func TestMultiCreate( t *testing.T ) {
 
 func TestCreateBadRegistration( t *testing.T ) {
     expected := http.StatusBadRequest
-    status, _ := client.Create( cfg.Endpoint, api.Registration{ }, goodToken )
+    status, _ := client.CreateDepositRequest( cfg.Endpoint, api.Registration{ }, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -160,7 +160,7 @@ func TestCreateBadRegistration( t *testing.T ) {
 func TestCreateBadToken( t *testing.T ) {
     reg := makeSingleRegistration( )
     expected := http.StatusForbidden
-    status, _ := client.Create( cfg.Endpoint, reg, badToken )
+    status, _ := client.CreateDepositRequest( cfg.Endpoint, reg, badToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -177,7 +177,7 @@ func TestCreateBadToken( t *testing.T ) {
 func TestDeleteHappyDay( t *testing.T ) {
     newId := createNewReg( t )
     expected := http.StatusOK
-    status := client.Delete( cfg.Endpoint, newId, goodToken )
+    status := client.DeleteDepositRequest( cfg.Endpoint, newId, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -185,7 +185,7 @@ func TestDeleteHappyDay( t *testing.T ) {
 
 func TestDeleteEmptyId( t *testing.T ) {
     expected := http.StatusBadRequest
-    status := client.Delete( cfg.Endpoint, empty, goodToken )
+    status := client.DeleteDepositRequest( cfg.Endpoint, empty, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -193,7 +193,7 @@ func TestDeleteEmptyId( t *testing.T ) {
 
 func TestDeleteNotFoundId( t *testing.T ) {
     expected := http.StatusNotFound
-    status := client.Delete( cfg.Endpoint, notFoundId, goodToken )
+    status := client.DeleteDepositRequest( cfg.Endpoint, notFoundId, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -201,7 +201,7 @@ func TestDeleteNotFoundId( t *testing.T ) {
 
 func TestDeleteBadToken( t *testing.T ) {
     expected := http.StatusForbidden
-    status := client.Delete( cfg.Endpoint, goodId, badToken )
+    status := client.DeleteDepositRequest( cfg.Endpoint, goodId, badToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -239,7 +239,7 @@ func ensureValidOptions( t *testing.T, options * api.Options ) {
 func createNewReg( t *testing.T ) string {
     reg := makeSingleRegistration( )
     expected := http.StatusOK
-    status, results := client.Create( cfg.Endpoint, reg, goodToken )
+    status, results := client.CreateDepositRequest( cfg.Endpoint, reg, goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }

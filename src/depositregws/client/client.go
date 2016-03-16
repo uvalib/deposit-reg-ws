@@ -57,7 +57,7 @@ func Options( endpoint string ) ( int, * api.Options ) {
     return resp.StatusCode, r.Options
 }
 
-func Get( endpoint string, id string, token string ) ( int, [] * api.Registration ) {
+func GetDepositRequest( endpoint string, id string, token string ) ( int, [] * api.Registration ) {
 
     url := fmt.Sprintf( "%s/%s?auth=%s", endpoint, id, token )
     //fmt.Printf( "%s\n", url )
@@ -83,7 +83,7 @@ func Get( endpoint string, id string, token string ) ( int, [] * api.Registratio
     return resp.StatusCode, r.Details
 }
 
-func Search( endpoint string, id string, token string ) ( int, [] * api.Registration ) {
+func SearchDepositRequest( endpoint string, id string, token string ) ( int, [] * api.Registration ) {
 
     url := fmt.Sprintf( "%s?auth=%s&later=%s", endpoint, token, id )
     //fmt.Printf( "%s\n", url )
@@ -109,7 +109,7 @@ func Search( endpoint string, id string, token string ) ( int, [] * api.Registra
     return resp.StatusCode, r.Details
 }
 
-func Create( endpoint string, reg api.Registration, token string ) ( int, [] * api.Registration ) {
+func CreateDepositRequest( endpoint string, reg api.Registration, token string ) ( int, [] * api.Registration ) {
 
     url := fmt.Sprintf( "%s?auth=%s", endpoint, token )
     //fmt.Printf( "%s\n", url )
@@ -141,11 +141,11 @@ func Create( endpoint string, reg api.Registration, token string ) ( int, [] * a
     return resp.StatusCode, r.Details
 }
 
-func Update( endpoint string, reg api.Registration, token string ) ( int, * api.Registration ) {
+func UpdateDepositRequest( endpoint string, reg api.Registration, token string ) ( int, * api.Registration ) {
     return http.StatusInternalServerError, nil
 }
 
-func Delete( endpoint string, id string, token string ) int {
+func DeleteDepositRequest( endpoint string, id string, token string ) int {
 
     url := fmt.Sprintf( "%s/%s?auth=%s", endpoint, id, token )
     //fmt.Printf( "%s\n", url )

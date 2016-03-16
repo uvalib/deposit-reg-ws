@@ -30,7 +30,7 @@ func RegistrationSearch( w http.ResponseWriter, r *http.Request ) {
     }
 
     // get the request details
-    reqs, err := dao.Database.Search( id )
+    reqs, err := dao.Database.SearchDepositRequest( id )
     if err != nil {
         log.Println( err )
         status := http.StatusInternalServerError

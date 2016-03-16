@@ -8,14 +8,6 @@ import (
     "strconv"
 )
 
-type Datastore interface {
-    Check( ) error
-    Get( id string ) ( [] * api.Registration, error )
-    Search( id string ) ( [ ] * api.Registration, error )
-    Create( reg api.Registration ) ( * api.Registration, error )
-    Delete( id string ) error
-}
-
 type DB struct {
     *sql.DB
 }
@@ -41,7 +33,7 @@ func ( db *DB ) Check( ) error {
     return nil
 }
 
-func ( db *DB ) Get( id string ) ( [] * api.Registration, error ) {
+func ( db *DB ) GetDepositRequest( id string ) ( [] * api.Registration, error ) {
 
     rows, err := db.Query( "SELECT * FROM depositrequest WHERE id = ? LIMIT 1", id )
     if err != nil {
@@ -52,7 +44,7 @@ func ( db *DB ) Get( id string ) ( [] * api.Registration, error ) {
     return makeResults( rows )
 }
 
-func ( db *DB ) Search( id string ) ( [] * api.Registration, error ) {
+func ( db *DB ) SearchDepositRequest( id string ) ( [] * api.Registration, error ) {
 
     rows, err := db.Query( "SELECT * FROM depositrequest WHERE id > ?", id )
     if err != nil {
@@ -63,7 +55,7 @@ func ( db *DB ) Search( id string ) ( [] * api.Registration, error ) {
     return makeResults( rows )
 }
 
-func ( db *DB ) Create( reg api.Registration ) ( * api.Registration, error ) {
+func ( db *DB ) CreateDepositRequest( reg api.Registration ) ( * api.Registration, error ) {
 
     stmt, err := db.Prepare( "INSERT INTO depositrequest( requester, user, school, degree ) VALUES(?,?,?,?)" )
     if err != nil {
@@ -84,7 +76,7 @@ func ( db *DB ) Create( reg api.Registration ) ( * api.Registration, error ) {
     return &reg, nil
 }
 
-func ( db *DB ) Delete( id string ) ( int64, error ) {
+func ( db *DB ) DeleteDepositRequest( id string ) ( int64, error ) {
 
     stmt, err := db.Prepare( "DELETE FROM depositrequest WHERE id = ? LIMIT 1" )
     if err != nil {

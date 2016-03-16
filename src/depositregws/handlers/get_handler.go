@@ -31,7 +31,7 @@ func RegistrationGet( w http.ResponseWriter, r *http.Request ) {
     }
 
     // get the request details
-    reqs, err := dao.Database.Get( id )
+    reqs, err := dao.Database.GetDepositRequest( id )
     if err != nil {
         log.Println( err )
         status := http.StatusInternalServerError

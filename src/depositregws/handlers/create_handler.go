@@ -49,7 +49,7 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
     for _, u := range users {
 
         reg.For = strings.TrimSpace( u )
-        rg, err := dao.Database.Create( reg )
+        rg, err := dao.Database.CreateDepositRequest( reg )
         if err != nil {
             log.Println(err)
             status := http.StatusInternalServerError
