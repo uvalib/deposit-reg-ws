@@ -1,10 +1,13 @@
 package handlers
 
 import (
+    "log"
+    "fmt"
     "net/http"
     //"depositregws/authtoken"
     //"depositregws/config"
     "depositregws/api"
+    "depositregws/dao"
 )
 
 func OptionsGet( w http.ResponseWriter, r *http.Request ) {
@@ -23,10 +26,19 @@ func OptionsGet( w http.ResponseWriter, r *http.Request ) {
     //    return
     //}
 
-    // get possible registration options
-    schools := []string{"Business","Engineering","Health Sciences"}
+    // get the request details
+    departments, err := dao.Database.GetFieldSet( "department" )
+    if err != nil {
+        log.Println( err )
+        status := http.StatusInternalServerError
+        EncodeOptionsResponse( w, status,
+            fmt.Sprintf( "%s (%s)", http.StatusText( status ), err ),
+            nil )
+        return
+    }
+
     degrees := []string{"Graduate","Masters","Ph.D"}
-    options := api.Options{ School: schools, Degree: degrees }
+    options := api.Options{ School: departments, Degree: degrees }
 
     status := http.StatusOK
     EncodeOptionsResponse( w, status, http.StatusText( status ), &options )

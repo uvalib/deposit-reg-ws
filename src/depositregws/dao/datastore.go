@@ -41,7 +41,7 @@ func ( db *DB ) GetDepositRequest( id string ) ( [] * api.Registration, error ) 
     }
     defer rows.Close( )
 
-    return makeResults( rows )
+    return depositRequestResults( rows )
 }
 
 func ( db *DB ) SearchDepositRequest( id string ) ( [] * api.Registration, error ) {
@@ -52,7 +52,7 @@ func ( db *DB ) SearchDepositRequest( id string ) ( [] * api.Registration, error
     }
     defer rows.Close( )
 
-    return makeResults( rows )
+    return depositRequestResults( rows )
 }
 
 func ( db *DB ) CreateDepositRequest( reg api.Registration ) ( * api.Registration, error ) {
@@ -96,7 +96,17 @@ func ( db *DB ) DeleteDepositRequest( id string ) ( int64, error ) {
     return rowCount, nil
 }
 
-func makeResults( rows * sql.Rows ) ( [] * api.Registration, error ) {
+func ( db *DB ) GetFieldSet( field_name string ) ( [] string, error ) {
+    rows, err := db.Query( "SELECT field_value FROM fieldvalues WHERE field_name = ?", field_name )
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close( )
+
+    return fieldSetResults( rows )
+}
+
+func depositRequestResults( rows * sql.Rows ) ( [] * api.Registration, error ) {
 
     var optional sql.NullString
 
@@ -127,3 +137,18 @@ func makeResults( rows * sql.Rows ) ( [] * api.Registration, error ) {
     return results, nil
 }
 
+func fieldSetResults( rows * sql.Rows ) ( [] string, error ) {
+
+    results := make([ ] string, 0 )
+    for rows.Next() {
+        var s string
+        err := rows.Scan( &s )
+        if err != nil {
+            return nil, err
+        }
+        results = append( results, s )
+    }
+
+    log.Printf( "Returning %d row(s)", len( results ) )
+    return results, nil
+}
