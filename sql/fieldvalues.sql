@@ -60,5 +60,19 @@ INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Departm
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","School of Nursing");
 
 -- set of default deposit_type values
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "Optional Graduate Thesis" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "Optional Undergraduate Thesis" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "AM" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "CGE" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "DNP" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "EDD" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MA" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MAR" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MARH" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MCS" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "ME" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MED" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MEP" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MFA" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MMSE" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MS" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MUEP" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "PHD" );

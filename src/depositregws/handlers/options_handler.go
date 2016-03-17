@@ -26,7 +26,6 @@ func OptionsGet( w http.ResponseWriter, r *http.Request ) {
     //    return
     //}
 
-    // get the request details
     departments, err := dao.Database.GetFieldSet( "department" )
     if err != nil {
         log.Println( err )
@@ -37,7 +36,16 @@ func OptionsGet( w http.ResponseWriter, r *http.Request ) {
         return
     }
 
-    degrees := []string{"Graduate","Masters","Ph.D"}
+    degrees, err := dao.Database.GetFieldSet( "degree" )
+    if err != nil {
+        log.Println( err )
+        status := http.StatusInternalServerError
+        EncodeOptionsResponse( w, status,
+            fmt.Sprintf( "%s (%s)", http.StatusText( status ), err ),
+            nil )
+        return
+    }
+
     options := api.Options{ School: departments, Degree: degrees }
 
     status := http.StatusOK
