@@ -57,12 +57,12 @@ func ( db *DB ) SearchDepositRequest( id string ) ( [] * api.Registration, error
 
 func ( db *DB ) CreateDepositRequest( reg api.Registration ) ( * api.Registration, error ) {
 
-    stmt, err := db.Prepare( "INSERT INTO depositrequest( requester, user, school, degree ) VALUES(?,?,?,?)" )
+    stmt, err := db.Prepare( "INSERT INTO depositrequest( requester, user, department, degree ) VALUES(?,?,?,?)" )
     if err != nil {
         return nil, err
     }
 
-    res, err := stmt.Exec( reg.Requester, reg.For, reg.School, reg.Degree )
+    res, err := stmt.Exec( reg.Requester, reg.For, reg.Department, reg.Degree )
     if err != nil {
         return nil, err
     }
@@ -116,7 +116,7 @@ func depositRequestResults( rows * sql.Rows ) ( [] * api.Registration, error ) {
         err := rows.Scan( &reg.Id,
             &reg.Requester,
             &reg.For,
-            &reg.School,
+            &reg.Department,
             &reg.Degree,
             &reg.Status,
             &reg.RequestDate,

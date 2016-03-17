@@ -92,7 +92,7 @@ func TestGetBadToken( t *testing.T ) {
 
 func TestSearchHappyDay( t *testing.T ) {
     expected := http.StatusOK
-    status, details := client.SearchDepositRequest( cfg.Endpoint, goodId, goodToken )
+    status, details := client.SearchDepositRequest( cfg.Endpoint, "0", goodToken )
     if status != expected {
         t.Fatalf( "Expected %v, got %v\n", expected, status )
     }
@@ -213,7 +213,7 @@ func ensureValidRegistrations( t *testing.T, details [] * api.Registration ) {
         if emptyField( e.Id ) ||
            emptyField( e.Requester ) ||
            emptyField( e.For ) ||
-           emptyField( e.School ) ||
+           emptyField( e.Department ) ||
            emptyField( e.Degree ) {
            //emptyField( e.RequestDate ) ||
            //emptyField( e.Status ) {
@@ -224,9 +224,9 @@ func ensureValidRegistrations( t *testing.T, details [] * api.Registration ) {
 
 func ensureValidOptions( t *testing.T, options * api.Options ) {
 
-    for _, f := range options.School {
+    for _, f := range options.Department {
         if emptyField( f ) {
-            t.Fatalf( "Expected non-empty school field but one is empty\n" )
+            t.Fatalf( "Expected non-empty department field but one is empty\n" )
         }
     }
     for _, f := range options.Degree {
@@ -258,7 +258,7 @@ func makeSingleRegistration( ) api.Registration {
     return api.Registration{
         For: "dpg3k",
         Requester: "dpg3k",
-        School: "Engineering",
+        Department: "Engineering",
         Degree: "Ph.D" }
 }
 
@@ -266,7 +266,7 @@ func makeMultiRegistration( ) api.Registration {
     return api.Registration{
         For: "dpg3k, tss6n",
         Requester: "dpg3k",
-        School: "Engineering",
+        Department: "Engineering",
         Degree: "Ph.D" }
 }
 

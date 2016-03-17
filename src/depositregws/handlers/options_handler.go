@@ -46,7 +46,7 @@ func OptionsGet( w http.ResponseWriter, r *http.Request ) {
         return
     }
 
-    options := api.Options{ School: departments, Degree: degrees }
+    options := api.Options{ Department: departments, Degree: degrees }
 
     status := http.StatusOK
     EncodeOptionsResponse( w, status, http.StatusText( status ), &options )
