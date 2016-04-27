@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS fieldvalues;
 CREATE TABLE fieldvalues(
    id          INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
    field_name  VARCHAR( 32 ) NOT NULL DEFAULT '',
-   field_value VARCHAR( 80 ) NOT NULL DEFAULT '',
+   field_value VARCHAR( 255 ) NOT NULL DEFAULT '',
    create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) CHARACTER SET utf8 COLLATE utf8_bin;
 

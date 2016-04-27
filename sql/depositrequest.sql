@@ -6,11 +6,9 @@ CREATE TABLE depositrequest(
    id          INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
    requester   VARCHAR( 32 ) NOT NULL DEFAULT '',
    user        VARCHAR( 32 ) NOT NULL DEFAULT '',
-   department  VARCHAR( 32 ) NOT NULL DEFAULT '',
-   degree      VARCHAR( 32 ) NOT NULL DEFAULT '',
+   department  VARCHAR( 255 ) NOT NULL DEFAULT '',
+   degree      VARCHAR( 255 ) NOT NULL DEFAULT '',
    status      ENUM('pending', 'submitted') NOT NULL DEFAULT 'pending',
    request_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    deposit_date TIMESTAMP NULL
 ) CHARACTER SET utf8 COLLATE utf8_bin;
-
-INSERT INTO depositrequest( id, requester, user, department, degree ) VALUES( 1, "dpg3k", "dpg3k", "Engineering", "Ph.D" );
