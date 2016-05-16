@@ -9,7 +9,7 @@ CREATE TABLE fieldvalues(
    create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) CHARACTER SET utf8 COLLATE utf8_bin;
 
--- set of default department values
+-- set of department values
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Curry School of Education");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Department of Anthropology");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Department of Architectural History");
@@ -59,22 +59,21 @@ INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Departm
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Department of Urban and Environmental Planning");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","School of Nursing");
 
--- set of default deposit_type values
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "AM" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BA" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BSC" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "CGE" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "DNP" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "EDD" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MA" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MAR" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MARH" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MCS" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "ME" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MED" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MEP" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MFA" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MMSE" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MS" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MUEP" );
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "PHD" );
+-- set of degree values
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BA (Bachelor of Arts)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BS (Bachelor of Science)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BSC (Bachelor of Science in Commerce)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "DNP (Doctor of Nursing Practice)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "EDD (Doctor of Education)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MA (Master of Arts)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MAR (Master of Architecture)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MARH (Master of Architectural History)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MCS (Master of Computer Science)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "ME (Master of Engineering)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MED (Master of Education)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MEP (Master of Engineering Physics)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MFA (Master of Fine Arts)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MMSE (Master of Materials Science and Engineering)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MS (Master of Science)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "MUEP (Master of Urban and Environmental Planning)" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "PHD (Doctor of Philosophy)" );
