@@ -61,6 +61,8 @@ INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","School 
 
 -- set of default deposit_type values
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "AM" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BA" );
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BSC" );
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "CGE" );
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "DNP" );
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "EDD" );
