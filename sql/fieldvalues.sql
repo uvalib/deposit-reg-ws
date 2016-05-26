@@ -58,6 +58,7 @@ INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Departm
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Department of Systems Engineering");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Department of Urban and Environmental Planning");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","School of Nursing");
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","School of Architecture");
 
 -- set of degree values
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BA (Bachelor of Arts)" );
