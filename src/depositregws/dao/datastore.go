@@ -46,7 +46,7 @@ func ( db *DB ) GetDepositRequest( id string ) ( [] * api.Registration, error ) 
 
 func ( db *DB ) SearchDepositRequest( id string ) ( [] * api.Registration, error ) {
 
-    rows, err := db.Query( "SELECT * FROM depositrequest WHERE id > ?", id )
+    rows, err := db.Query( "SELECT * FROM depositrequest WHERE id > ? ORDER BY id ASC", id )
     if err != nil {
         return nil, err
     }
