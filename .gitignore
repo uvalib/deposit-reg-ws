@@ -7,3 +7,4 @@ pkg
 env.set
 env.unset
 src/depositregws/service_test.yml
+buildtag.build-0
