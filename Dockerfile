@@ -18,9 +18,6 @@ WORKDIR $APP_HOME
 RUN mkdir -p $APP_HOME/scripts $APP_HOME/bin
 RUN chown -R webservice $APP_HOME && chgrp -R webservice $APP_HOME
 
-# Add the build tag
-COPY buildtag.* $APP_HOME/
-
 # Specify the user
 USER webservice
 
@@ -31,3 +28,6 @@ CMD scripts/entry.sh
 # Move in necessary assets
 COPY scripts/entry.sh $APP_HOME/scripts/entry.sh
 COPY bin/deposit-reg-ws.linux $APP_HOME/bin/deposit-reg-ws
+
+# Add the build tag
+COPY buildtag.* $APP_HOME/
