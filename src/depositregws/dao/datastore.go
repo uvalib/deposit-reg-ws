@@ -133,7 +133,7 @@ func depositRequestResults( rows * sql.Rows ) ( [] * api.Registration, error ) {
         return nil, err
     }
 
-    log.Printf( "Returning %d row(s)", len( results ) )
+    log.Printf( "Deposit registration request returns %d row(s)", len( results ) )
     return results, nil
 }
 
@@ -149,6 +149,6 @@ func fieldSetResults( rows * sql.Rows ) ( [] string, error ) {
         results = append( results, s )
     }
 
-    log.Printf( "Returning %d row(s)", len( results ) )
+    log.Printf( "Field set request returns %d row(s)", len( results ) )
     return results, nil
 }
