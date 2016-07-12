@@ -6,12 +6,14 @@ import (
     "net/http"
     "depositregws/config"
     "depositregws/dao"
+    "depositregws/handlers"
 )
 
 func main( ) {
 
-    // access the database
+    log.Printf( "===> %s version: '%s' <===", config.Configuration.ServiceName, handlers.Version( ) )
 
+    // access the database
     connectStr := fmt.Sprintf( "%s:%s@tcp(%s)/%s?allowOldPasswords=1", config.Configuration.DbUser,
         config.Configuration.DbPassphrase, config.Configuration.DbHost, config.Configuration.DbName )
 

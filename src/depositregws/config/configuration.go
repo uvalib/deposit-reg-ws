@@ -6,6 +6,7 @@ import (
 )
 
 type Config struct {
+    ServiceName        string
     ServicePort        string
     DbHost             string
     DbName             string
@@ -19,7 +20,7 @@ var Configuration = LoadConfig( )
 
 func LoadConfig( ) Config {
 
-    c := Config{}
+    c := Config{ ServiceName: "DEPOSITREG" }
 
     // process command line flags and setup configuration
     flag.StringVar( &c.ServicePort, "port", "8080", "The service listen port" )
