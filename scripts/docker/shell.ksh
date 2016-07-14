@@ -7,4 +7,4 @@ fi
 INSTANCE=deposit-reg-ws
 NAMESPACE=uvadave
 
-docker run -ti -p 8180:8080 $NAMESPACE/$INSTANCE /bin/bash
+docker run -ti -p 8180:8080 $NAMESPACE/$INSTANCE /bin/bash -l

@@ -27,6 +27,7 @@ CMD scripts/entry.sh
 
 # Move in necessary assets
 COPY scripts/entry.sh $APP_HOME/scripts/entry.sh
+COPY data/container_bash_profile /home/webservice/.profile
 COPY bin/deposit-reg-ws.linux $APP_HOME/bin/deposit-reg-ws
 
 # Add the build tag
