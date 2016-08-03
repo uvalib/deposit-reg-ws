@@ -1,13 +1,12 @@
 package handlers
 
 import (
-    "log"
     "fmt"
     "net/http"
-    //"github.com/gorilla/mux"
     "depositregws/authtoken"
     "depositregws/config"
     "depositregws/dao"
+    "depositregws/logger"
 )
 
 func RegistrationSearch( w http.ResponseWriter, r *http.Request ) {
@@ -32,7 +31,7 @@ func RegistrationSearch( w http.ResponseWriter, r *http.Request ) {
     // get the request details
     reqs, err := dao.Database.SearchDepositRequest( id )
     if err != nil {
-        log.Println( err )
+        logger.Log( fmt.Sprintf( "ERROR: %s\n", err.Error( ) ) )
         status := http.StatusInternalServerError
         EncodeStandardResponse( w, status,
             fmt.Sprintf( "%s (%s)", http.StatusText( status ), err ),

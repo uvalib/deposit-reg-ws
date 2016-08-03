@@ -4,8 +4,9 @@ import (
     "database/sql"
     _ "github.com/go-sql-driver/mysql"
     "depositregws/api"
-    "log"
     "strconv"
+    "fmt"
+    "depositregws/logger"
 )
 
 type DB struct {
@@ -133,7 +134,7 @@ func depositRequestResults( rows * sql.Rows ) ( [] * api.Registration, error ) {
         return nil, err
     }
 
-    log.Printf( "Deposit registration request returns %d row(s)", len( results ) )
+    logger.Log( fmt.Sprintf( "Deposit registration request returns %d row(s)", len( results ) ) )
     return results, nil
 }
 
@@ -149,6 +150,6 @@ func fieldSetResults( rows * sql.Rows ) ( [] string, error ) {
         results = append( results, s )
     }
 
-    log.Printf( "Field set request returns %d row(s)", len( results ) )
+    logger.Log( fmt.Sprintf( "Field set request returns %d row(s)", len( results ) ) )
     return results, nil
 }

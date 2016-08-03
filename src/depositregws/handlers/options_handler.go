@@ -1,13 +1,11 @@
 package handlers
 
 import (
-    "log"
     "fmt"
     "net/http"
-    //"depositregws/authtoken"
-    //"depositregws/config"
     "depositregws/api"
     "depositregws/dao"
+    "depositregws/logger"
 )
 
 func OptionsGet( w http.ResponseWriter, r *http.Request ) {
@@ -28,7 +26,7 @@ func OptionsGet( w http.ResponseWriter, r *http.Request ) {
 
     departments, err := dao.Database.GetFieldSet( "department" )
     if err != nil {
-        log.Println( err )
+        logger.Log( fmt.Sprintf( "ERROR: %s\n", err.Error( ) ) )
         status := http.StatusInternalServerError
         EncodeOptionsResponse( w, status,
             fmt.Sprintf( "%s (%s)", http.StatusText( status ), err ),
@@ -38,7 +36,7 @@ func OptionsGet( w http.ResponseWriter, r *http.Request ) {
 
     degrees, err := dao.Database.GetFieldSet( "degree" )
     if err != nil {
-        log.Println( err )
+        logger.Log( fmt.Sprintf( "ERROR: %s\n", err.Error( ) ) )
         status := http.StatusInternalServerError
         EncodeOptionsResponse( w, status,
             fmt.Sprintf( "%s (%s)", http.StatusText( status ), err ),

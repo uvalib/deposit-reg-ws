@@ -1,16 +1,15 @@
 package handlers
 
 import (
-    "log"
     "fmt"
     "strings"
     "net/http"
     "encoding/json"
-//    "github.com/gorilla/mux"
     "depositregws/authtoken"
     "depositregws/config"
     "depositregws/dao"
     "depositregws/api"
+    "depositregws/logger"
 )
 
 func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
@@ -51,7 +50,7 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
         reg.For = strings.TrimSpace( u )
         rg, err := dao.Database.CreateDepositRequest( reg )
         if err != nil {
-            log.Println(err)
+            logger.Log( fmt.Sprintf( "ERROR: %s\n", err.Error( ) ) )
             status := http.StatusInternalServerError
             EncodeStandardResponse(w, status,
                 fmt.Sprintf("%s (%s)", http.StatusText( status ), err),

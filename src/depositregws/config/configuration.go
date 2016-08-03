@@ -2,11 +2,11 @@ package config
 
 import (
     "flag"
-    "log"
+    "fmt"
+    "depositregws/logger"
 )
 
 type Config struct {
-    ServiceName        string
     ServicePort        string
     DbHost             string
     DbName             string
@@ -20,7 +20,7 @@ var Configuration = LoadConfig( )
 
 func LoadConfig( ) Config {
 
-    c := Config{ ServiceName: "DEPOSITREG" }
+    c := Config{ }
 
     // process command line flags and setup configuration
     flag.StringVar( &c.ServicePort, "port", "8080", "The service listen port" )
@@ -33,13 +33,13 @@ func LoadConfig( ) Config {
 
     flag.Parse()
 
-    log.Printf( "ServicePort:       %s", c.ServicePort )
-    log.Printf( "DbHost:            %s", c.DbHost )
-    log.Printf( "DbName:            %s", c.DbName )
-    log.Printf( "DbUser:            %s", c.DbUser )
-    log.Printf( "DbPassphrase:      %s", c.DbPassphrase )
-    log.Printf( "AuthTokenEndpoint  %s", c.AuthTokenEndpoint )
-    log.Printf( "Debug              %t", c.Debug )
+    logger.Log( fmt.Sprintf( "ServicePort:       %s", c.ServicePort ) )
+    logger.Log( fmt.Sprintf( "DbHost:            %s", c.DbHost ) )
+    logger.Log( fmt.Sprintf( "DbName:            %s", c.DbName ) )
+    logger.Log( fmt.Sprintf( "DbUser:            %s", c.DbUser ) )
+    logger.Log( fmt.Sprintf( "DbPassphrase:      %s", c.DbPassphrase ) )
+    logger.Log( fmt.Sprintf( "AuthTokenEndpoint  %s", c.AuthTokenEndpoint ) )
+    logger.Log( fmt.Sprintf( "Debug              %t", c.Debug ) )
 
     return c
 }

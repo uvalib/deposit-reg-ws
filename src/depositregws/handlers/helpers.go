@@ -6,11 +6,13 @@ import (
     "encoding/json"
     "net/http"
     "depositregws/api"
+    "fmt"
+    "depositregws/logger"
 )
 
 func EncodeStandardResponse( w http.ResponseWriter, status int, message string, details [] * api.Registration ) {
 
-    log.Printf( "Status: %d (%s)\n", status, message )
+    logger.Log( fmt.Sprintf( "Status: %d (%s)\n", status, message ) )
     jsonAttributes( w )
     coorsAttributes( w )
     w.WriteHeader( status )

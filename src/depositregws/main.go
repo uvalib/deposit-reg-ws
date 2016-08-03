@@ -7,11 +7,12 @@ import (
     "depositregws/config"
     "depositregws/dao"
     "depositregws/handlers"
+    "depositregws/logger"
 )
 
 func main( ) {
 
-    log.Printf( "===> %s version: '%s' <===", config.Configuration.ServiceName, handlers.Version( ) )
+    logger.Log( fmt.Sprintf( "===> version: '%s' <===", handlers.Version( ) ) )
 
     // access the database
     connectStr := fmt.Sprintf( "%s:%s@tcp(%s)/%s?allowOldPasswords=1", config.Configuration.DbUser,
