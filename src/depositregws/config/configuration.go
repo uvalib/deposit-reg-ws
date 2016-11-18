@@ -4,6 +4,7 @@ import (
     "flag"
     "fmt"
     "depositregws/logger"
+    "strings"
 )
 
 type Config struct {
@@ -37,7 +38,7 @@ func LoadConfig( ) Config {
     logger.Log( fmt.Sprintf( "DbHost:            %s", c.DbHost ) )
     logger.Log( fmt.Sprintf( "DbName:            %s", c.DbName ) )
     logger.Log( fmt.Sprintf( "DbUser:            %s", c.DbUser ) )
-    logger.Log( fmt.Sprintf( "DbPassphrase:      %s", c.DbPassphrase ) )
+    logger.Log( fmt.Sprintf( "DbPassphrase:      %s", strings.Repeat( "*", len( c.DbPassphrase ) ) ) )
     logger.Log( fmt.Sprintf( "AuthTokenEndpoint  %s", c.AuthTokenEndpoint ) )
     logger.Log( fmt.Sprintf( "Debug              %t", c.Debug ) )
 
