@@ -3,4 +3,9 @@ if [ -z "$GOPATH" ]; then
    exit 1
 fi
 
-go test -v depositregws
+RUN=""
+if [ $# -ge 1 ]; then
+   RUN="-run $*"
+fi
+
+go test -v depositregws $RUN
