@@ -1,10 +1,7 @@
 .idea
 src/github.com
-src/golang.org
-src/gopkg.in
 bin
 pkg
-env.set
-env.unset
+env.*
 src/depositregws/service_test.yml
 buildtag.build-0
