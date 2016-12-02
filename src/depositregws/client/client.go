@@ -7,6 +7,8 @@ import (
     "net/http"
     "depositregws/api"
     "encoding/json"
+    "io"
+    "io/ioutil"
 )
 
 var debugHttp = false
@@ -26,6 +28,7 @@ func HealthCheck( endpoint string ) int {
         return http.StatusInternalServerError
     }
 
+    defer io.Copy( ioutil.Discard, resp.Body )
     defer resp.Body.Close( )
 
     return resp.StatusCode
@@ -46,6 +49,7 @@ func VersionCheck( endpoint string ) ( int, string ) {
         return http.StatusInternalServerError, ""
     }
 
+    defer io.Copy( ioutil.Discard, resp.Body )
     defer resp.Body.Close( )
 
     r := api.VersionResponse{ }
@@ -72,6 +76,7 @@ func Options( endpoint string ) ( int, * api.Options ) {
         return http.StatusInternalServerError, nil
     }
 
+    defer io.Copy( ioutil.Discard, resp.Body )
     defer resp.Body.Close( )
 
     r := api.OptionsResponse{ }
@@ -98,6 +103,7 @@ func GetDepositRequest( endpoint string, id string, token string ) ( int, [] * a
        return http.StatusInternalServerError, nil
     }
 
+    defer io.Copy( ioutil.Discard, resp.Body )
     defer resp.Body.Close( )
 
     r := api.StandardResponse{ }
@@ -124,6 +130,7 @@ func SearchDepositRequest( endpoint string, id string, token string ) ( int, [] 
         return http.StatusInternalServerError, nil
     }
 
+    defer io.Copy( ioutil.Discard, resp.Body )
     defer resp.Body.Close( )
 
     r := api.StandardResponse{ }
@@ -152,6 +159,7 @@ func CreateDepositRequest( endpoint string, reg api.Registration, token string )
         return http.StatusInternalServerError, nil
     }
 
+    defer io.Copy( ioutil.Discard, resp.Body )
     defer resp.Body.Close( )
 
     r := api.StandardResponse{ }
@@ -186,6 +194,7 @@ func DeleteDepositRequest( endpoint string, id string, token string ) int {
         return http.StatusInternalServerError
     }
 
+    defer io.Copy( ioutil.Discard, resp.Body )
     defer resp.Body.Close( )
 
     r := api.StandardResponse{ }
