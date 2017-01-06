@@ -25,10 +25,10 @@ var routes = Routes{
     },
 
     Route{
-        "VersionGet",
+        "VersionInfo",
         "GET",
         "/version",
-        handlers.VersionGet,
+        handlers.VersionInfo,
     },
 
     Route{
