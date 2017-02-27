@@ -12,6 +12,7 @@ import (
 )
 
 var debugHttp = false
+var serviceTimeout = 5
 
 func HealthCheck( endpoint string ) int {
 
@@ -21,7 +22,7 @@ func HealthCheck( endpoint string ) int {
     resp, _, errs := gorequest.New( ).
        SetDebug( debugHttp ).
        Get( url ).
-       Timeout( time.Duration( 5 ) * time.Second ).
+       Timeout( time.Duration( serviceTimeout ) * time.Second ).
        End( )
 
     if errs != nil {
@@ -42,7 +43,7 @@ func VersionCheck( endpoint string ) ( int, string ) {
     resp, body, errs := gorequest.New( ).
        SetDebug( false ).
        Get( url ).
-       Timeout( time.Duration( 5 ) * time.Second ).
+       Timeout( time.Duration( serviceTimeout ) * time.Second ).
        End( )
 
     if errs != nil {
@@ -69,7 +70,7 @@ func RuntimeCheck( endpoint string ) ( int, * api.RuntimeResponse ) {
     resp, body, errs := gorequest.New( ).
             SetDebug( false ).
             Get( url  ).
-            Timeout( time.Duration( 5 ) * time.Second ).
+            Timeout( time.Duration( serviceTimeout ) * time.Second ).
             End( )
 
     if errs != nil {
@@ -96,7 +97,7 @@ func Options( endpoint string ) ( int, * api.Options ) {
     resp, body, errs := gorequest.New( ).
        SetDebug( debugHttp ).
        Get( url ).
-       Timeout( time.Duration( 5 ) * time.Second ).
+       Timeout( time.Duration( serviceTimeout ) * time.Second ).
        End( )
 
     if errs != nil {
@@ -123,7 +124,7 @@ func GetDepositRequest( endpoint string, id string, token string ) ( int, [] * a
     resp, body, errs := gorequest.New( ).
        SetDebug( debugHttp ).
        Get( url  ).
-       Timeout( time.Duration( 5 ) * time.Second ).
+       Timeout( time.Duration( serviceTimeout ) * time.Second ).
        End( )
 
     if errs != nil {
@@ -150,7 +151,7 @@ func SearchDepositRequest( endpoint string, id string, token string ) ( int, [] 
     resp, body, errs := gorequest.New( ).
        SetDebug( debugHttp ).
        Get( url  ).
-       Timeout( time.Duration( 5 ) * time.Second ).
+       Timeout( time.Duration( serviceTimeout ) * time.Second ).
        End( )
 
     if errs != nil {
@@ -178,7 +179,7 @@ func CreateDepositRequest( endpoint string, reg api.Registration, token string )
        SetDebug( debugHttp ).
        Post( url  ).
        Send( reg ).
-       Timeout( time.Duration( 5 ) * time.Second ).
+       Timeout( time.Duration( serviceTimeout ) * time.Second ).
        Set( "Content-Type", "application/json" ).
        End( )
 
@@ -214,7 +215,7 @@ func DeleteDepositRequest( endpoint string, id string, token string ) int {
     resp, body, errs := gorequest.New( ).
        SetDebug( debugHttp ).
        Delete( url  ).
-       Timeout( time.Duration( 5 ) * time.Second ).
+       Timeout( time.Duration( serviceTimeout ) * time.Second ).
        End( )
 
     if errs != nil {

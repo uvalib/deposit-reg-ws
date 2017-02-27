@@ -4,6 +4,7 @@ DBNAME_OPT=""
 DBUSER_OPT=""
 DBPASSWD_OPT=""
 TOKENURL_OPT=""
+TIMEOUT_OPT=""
 DEBUG_OPT=""
 
 # database host
@@ -31,12 +32,17 @@ if [ -n "$TOKENAUTH_URL" ]; then
    TOKENURL_OPT="--tokenauth $TOKENAUTH_URL"
 fi
 
+# service timeout
+if [ -n "$SERVICE_TIMEOUT" ]; then
+   TIMEOUT_OPT="--timeout $SERVICE_TIMEOUT"
+fi
+
 # service debugging
 if [ -n "$DEPOSITREG_DEBUG" ]; then
    DEBUG_OPT="--debug"
 fi
 
-bin/deposit-reg-ws $DBHOST_OPT $DBNAME_OPT $DBUSER_OPT $DBPASSWD_OPT $TOKENURL_OPT $DEBUG_OPT
+bin/deposit-reg-ws $DBHOST_OPT $DBNAME_OPT $DBUSER_OPT $DBPASSWD_OPT $TOKENURL_OPT $TIMEOUT_OPT $DEBUG_OPT
 
 #
 # end of file
