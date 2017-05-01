@@ -98,7 +98,7 @@ func ( db *DB ) DeleteDepositRequest( id string ) ( int64, error ) {
 }
 
 func ( db *DB ) GetFieldSet( field_name string ) ( [] string, error ) {
-    rows, err := db.Query( "SELECT field_value FROM fieldvalues WHERE field_name = ?", field_name )
+    rows, err := db.Query( "SELECT field_value FROM fieldvalues WHERE field_name = ? ORDER BY field_value ASC", field_name )
     if err != nil {
         return nil, err
     }
