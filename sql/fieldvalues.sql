@@ -60,6 +60,9 @@ INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Departm
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","School of Nursing");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","School of Architecture");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Middle Eastern and South Asian Languages and Cultures");
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Community Based Undergraduate Research Grant");
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Double Hoo Research Grant");
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Harrison Undergraduate Research Award");
 
 -- set of degree values
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "degree", "BA (Bachelor of Arts)" );
