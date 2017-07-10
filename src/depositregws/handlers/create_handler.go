@@ -10,6 +10,8 @@ import (
     "depositregws/dao"
     "depositregws/api"
     "depositregws/logger"
+    "io"
+    "io/ioutil"
 )
 
 func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
@@ -38,6 +40,9 @@ func RegistrationCreate( w http.ResponseWriter, r *http.Request ) {
         EncodeStandardResponse( w, status, http.StatusText( status ), nil )
         return
     }
+
+    defer io.Copy( ioutil.Discard, r.Body )
+    defer r.Body.Close( )
 
     // create results list
     results := make([ ] * api.Registration, 0 )
