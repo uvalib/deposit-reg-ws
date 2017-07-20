@@ -3,7 +3,7 @@ if [ -z "$GOPATH" ]; then
    exit 1
 fi
 
-go fmt depositregws
+go fmt depositregws/...
 res=$?
 
 echo "Exiting with status $res"

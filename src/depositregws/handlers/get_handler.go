@@ -1,52 +1,52 @@
 package handlers
 
 import (
-    "fmt"
-    "net/http"
-    "github.com/gorilla/mux"
-    "depositregws/authtoken"
-    "depositregws/config"
-    "depositregws/dao"
-    "depositregws/logger"
+	"depositregws/authtoken"
+	"depositregws/config"
+	"depositregws/dao"
+	"depositregws/logger"
+	"fmt"
+	"github.com/gorilla/mux"
+	"net/http"
 )
 
-func RegistrationGet( w http.ResponseWriter, r *http.Request ) {
+func RegistrationGet(w http.ResponseWriter, r *http.Request) {
 
-    vars := mux.Vars( r )
-    id := vars[ "id" ]
-    token := r.URL.Query( ).Get( "auth" )
+	vars := mux.Vars(r)
+	id := vars["id"]
+	token := r.URL.Query().Get("auth")
 
-    // parameters OK ?
-    if NotEmpty( id ) == false || NotEmpty( token ) == false {
-        status := http.StatusBadRequest
-        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
-        return
-    }
+	// parameters OK ?
+	if NotEmpty(id) == false || NotEmpty(token) == false {
+		status := http.StatusBadRequest
+		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		return
+	}
 
-    // validate the token
-    if authtoken.Validate( config.Configuration.AuthTokenEndpoint, token, config.Configuration.Timeout ) == false {
-        status := http.StatusForbidden
-        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
-        return
-    }
+	// validate the token
+	if authtoken.Validate(config.Configuration.AuthTokenEndpoint, token, config.Configuration.Timeout) == false {
+		status := http.StatusForbidden
+		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		return
+	}
 
-    // get the request details
-    reqs, err := dao.Database.GetDepositRequest( id )
-    if err != nil {
-        logger.Log( fmt.Sprintf( "ERROR: %s\n", err.Error( ) ) )
-        status := http.StatusInternalServerError
-        EncodeStandardResponse( w, status,
-            fmt.Sprintf( "%s (%s)", http.StatusText( status ), err ),
-            nil )
-        return
-    }
+	// get the request details
+	reqs, err := dao.Database.GetDepositRequest(id)
+	if err != nil {
+		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
+		status := http.StatusInternalServerError
+		EncodeStandardResponse(w, status,
+			fmt.Sprintf("%s (%s)", http.StatusText(status), err),
+			nil)
+		return
+	}
 
-    if reqs == nil || len( reqs ) == 0 {
-        status := http.StatusNotFound
-        EncodeStandardResponse( w, status, http.StatusText( status ), nil )
-        return
-    }
+	if reqs == nil || len(reqs) == 0 {
+		status := http.StatusNotFound
+		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		return
+	}
 
-    status := http.StatusOK
-    EncodeStandardResponse( w, status, http.StatusText( status ), reqs )
+	status := http.StatusOK
+	EncodeStandardResponse(w, status, http.StatusText(status), reqs)
 }

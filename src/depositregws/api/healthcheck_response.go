@@ -1,6 +1,5 @@
 package api
 
 type HealthCheckResponse struct {
-	CheckType      HealthCheckResult `json:"mysql"`
+	CheckType HealthCheckResult `json:"mysql"`
 }
-
