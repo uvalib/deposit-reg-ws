@@ -1,7 +1,7 @@
-.idea
-src/github.com
-bin
-pkg
-env.*
-src/depositregws/service_test.yml
-buildtag.build-0
+/.idea
+/src/github.com
+/bin
+/pkg
+/env.*
+/src/depositregws/service_test.yml
+/buildtag.build-0
