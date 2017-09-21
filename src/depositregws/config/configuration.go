@@ -29,7 +29,7 @@ func LoadConfig() Config {
 	flag.StringVar(&c.DbHost, "dbhost", "mysqldev.lib.virginia.edu:3306", "The database server hostname:port")
 	flag.StringVar(&c.DbName, "dbname", "depositreg_development", "The database name")
 	flag.StringVar(&c.DbUser, "dbuser", "depositreg", "The database username")
-	flag.StringVar(&c.DbPassphrase, "dbpassword", "dbpassword", "The database passphrase")
+	flag.StringVar(&c.DbPassphrase, "dbpassword", "", "The database passphrase")
 	flag.StringVar(&c.AuthTokenEndpoint, "tokenauth", "http://docker1.lib.virginia.edu:8200", "The token authentication endpoint")
 	flag.IntVar(&c.Timeout, "timeout", 15, "The external service timeout in seconds")
 	flag.BoolVar(&c.Debug, "debug", false, "Enable debugging")
