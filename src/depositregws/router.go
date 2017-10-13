@@ -6,67 +6,67 @@ import (
 	"net/http"
 )
 
-type Route struct {
+type route struct {
 	Name        string
 	Method      string
 	Pattern     string
 	HandlerFunc http.HandlerFunc
 }
 
-type Routes []Route
+type routeSlice []route
 
-var routes = Routes{
+var routes = routeSlice {
 
-	Route{
+	route{
 		"HealthCheck",
 		"GET",
 		"/healthcheck",
 		handlers.HealthCheck,
 	},
 
-	Route{
+	route{
 		"VersionInfo",
 		"GET",
 		"/version",
 		handlers.VersionInfo,
 	},
 
-	Route{
+	route{
 		"RuntimeInfo",
 		"GET",
 		"/runtime",
 		handlers.RuntimeInfo,
 	},
 
-	Route{
+	route{
 		"OptionsGet",
 		"GET",
 		"/options",
 		handlers.OptionsGet,
 	},
 
-	Route{
+	route{
 		"RegistrationGet",
 		"GET",
 		"/{id}",
 		handlers.RegistrationGet,
 	},
 
-	Route{
+	route{
 		"RegistrationSearch",
 		"GET",
 		"/",
 		handlers.RegistrationSearch,
 	},
 
-	Route{
+	route{
 		"RegistrationCreate",
 		"POST",
 		"/",
 		handlers.RegistrationCreate,
 	},
 
-	Route{
+	route{
 		"RegistrationCreate",
 		"OPTIONS",
 		"/",
@@ -74,7 +74,7 @@ var routes = Routes{
 	},
 
 	/*
-	   Route{
+	   route{
 	       "RegistrationUpdate",
 	       "PUT",
 	       "/{id}",
@@ -82,7 +82,7 @@ var routes = Routes{
 	   },
 
 	*/
-	Route{
+	route{
 		"RegistrationDelete",
 		"DELETE",
 		"/{id}",
@@ -90,6 +90,9 @@ var routes = Routes{
 	},
 }
 
+//
+// NewRouter -- build and return the router
+//
 func NewRouter() *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)
@@ -109,3 +112,7 @@ func NewRouter() *mux.Router {
 
 	return router
 }
+
+//
+// end of file
+//

@@ -11,15 +11,15 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type TestConfig struct {
+type testConfig struct {
    Endpoint string
    Token    string
 }
 
 var cfg = loadConfig()
 
-var goodId = "1"
-var notFoundId = "x"
+var goodID = "1"
+var notFoundID = "x"
 var goodToken = cfg.Token
 var badToken = "badness"
 var empty = " "
@@ -69,7 +69,7 @@ func TestRuntimeCheck(t *testing.T) {
 
    if len( runtime.Version ) == 0 ||
       runtime.AllocatedMemory == 0 ||
-      runtime.CpuCount == 0 ||
+      runtime.CPUCount == 0 ||
       runtime.GoRoutineCount == 0 ||
       runtime.ObjectCount == 0 {
       t.Fatalf("Expected non-zero value in runtime info but one is zero\n")
@@ -82,7 +82,7 @@ func TestRuntimeCheck(t *testing.T) {
 
 func TestOptionsHappyDay(t *testing.T) {
    expected := http.StatusOK
-   status, options := client.Options(cfg.Endpoint)
+   status, options := client.GetOptions(cfg.Endpoint)
    if status != expected {
       t.Fatalf("Expected %v, got %v\n", expected, status)
    }
@@ -95,7 +95,7 @@ func TestOptionsHappyDay(t *testing.T) {
 
 func TestGetHappyDay(t *testing.T) {
    expected := http.StatusOK
-   status, details := client.GetDepositRequest(cfg.Endpoint, goodId, goodToken)
+   status, details := client.GetDepositRequest(cfg.Endpoint, goodID, goodToken)
    if status != expected {
       t.Fatalf("Expected %v, got %v\n", expected, status)
    }
@@ -112,7 +112,7 @@ func TestGetEmptyId(t *testing.T) {
 
 func TestGetNotFoundId(t *testing.T) {
    expected := http.StatusNotFound
-   status, _ := client.GetDepositRequest(cfg.Endpoint, notFoundId, goodToken)
+   status, _ := client.GetDepositRequest(cfg.Endpoint, notFoundID, goodToken)
    if status != expected {
       t.Fatalf("Expected %v, got %v\n", expected, status)
    }
@@ -120,7 +120,7 @@ func TestGetNotFoundId(t *testing.T) {
 
 func TestGetBadToken(t *testing.T) {
    expected := http.StatusForbidden
-   status, _ := client.GetDepositRequest(cfg.Endpoint, goodId, badToken)
+   status, _ := client.GetDepositRequest(cfg.Endpoint, goodID, badToken)
    if status != expected {
       t.Fatalf("Expected %v, got %v\n", expected, status)
    }
@@ -149,7 +149,7 @@ func TestSearchEmptyId(t *testing.T) {
 
 func TestSearchBadToken(t *testing.T) {
    expected := http.StatusForbidden
-   status, _ := client.SearchDepositRequest(cfg.Endpoint, goodId, badToken)
+   status, _ := client.SearchDepositRequest(cfg.Endpoint, goodID, badToken)
    if status != expected {
       t.Fatalf("Expected %v, got %v\n", expected, status)
    }
@@ -215,9 +215,9 @@ func TestCreateBadToken(t *testing.T) {
 //
 
 func TestDeleteHappyDay(t *testing.T) {
-   newId := createNewReg(t)
+   newID := createNewReg(t)
    expected := http.StatusOK
-   status := client.DeleteDepositRequest(cfg.Endpoint, newId, goodToken)
+   status := client.DeleteDepositRequest(cfg.Endpoint, newID, goodToken)
    if status != expected {
       t.Fatalf("Expected %v, got %v\n", expected, status)
    }
@@ -233,7 +233,7 @@ func TestDeleteEmptyId(t *testing.T) {
 
 func TestDeleteNotFoundId(t *testing.T) {
    expected := http.StatusNotFound
-   status := client.DeleteDepositRequest(cfg.Endpoint, notFoundId, goodToken)
+   status := client.DeleteDepositRequest(cfg.Endpoint, notFoundID, goodToken)
    if status != expected {
       t.Fatalf("Expected %v, got %v\n", expected, status)
    }
@@ -241,7 +241,7 @@ func TestDeleteNotFoundId(t *testing.T) {
 
 func TestDeleteBadToken(t *testing.T) {
    expected := http.StatusForbidden
-   status := client.DeleteDepositRequest(cfg.Endpoint, goodId, badToken)
+   status := client.DeleteDepositRequest(cfg.Endpoint, goodID, badToken)
    if status != expected {
       t.Fatalf("Expected %v, got %v\n", expected, status)
    }
@@ -250,7 +250,7 @@ func TestDeleteBadToken(t *testing.T) {
 func ensureValidRegistrations(t *testing.T, details []*api.Registration) {
 
    for _, e := range details {
-      if emptyField(e.Id) ||
+      if emptyField(e.ID) ||
          emptyField(e.Requester) ||
          emptyField(e.For) ||
          emptyField(e.Department) ||
@@ -287,7 +287,7 @@ func createNewReg(t *testing.T) string {
       t.Fatalf("Incomplete registration details returned")
    }
 
-   return results[0].Id
+   return results[0].ID
 }
 
 func emptyField(field string) bool {
@@ -310,14 +310,14 @@ func makeMultiRegistration() api.Registration {
       Degree:     "Ph.D"}
 }
 
-func loadConfig() TestConfig {
+func loadConfig() testConfig {
 
    data, err := ioutil.ReadFile("service_test.yml")
    if err != nil {
       log.Fatal(err)
    }
 
-   var c TestConfig
+   var c testConfig
    if err := yaml.Unmarshal(data, &c); err != nil {
       log.Fatal(err)
    }
@@ -327,3 +327,7 @@ func loadConfig() TestConfig {
 
    return c
 }
+
+//
+// end of file
+//

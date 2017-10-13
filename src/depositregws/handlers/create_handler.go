@@ -14,21 +14,24 @@ import (
 	"strings"
 )
 
+//
+// RegistrationCreate -- create registration handler
+//
 func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 
 	token := r.URL.Query().Get("auth")
 
 	// parameters OK ?
-	if NotEmpty(token) == false {
+	if notEmpty(token) == false {
 		status := http.StatusBadRequest
-		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeStandardResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
 	// validate the token
 	if authtoken.Validate(config.Configuration.AuthTokenEndpoint, token, config.Configuration.Timeout) == false {
 		status := http.StatusForbidden
-		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeStandardResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
@@ -37,7 +40,7 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 
 	if err := decoder.Decode(&reg); err != nil {
 		status := http.StatusBadRequest
-		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeStandardResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
@@ -53,11 +56,11 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 	for _, u := range users {
 
 		reg.For = strings.TrimSpace(u)
-		rg, err := dao.Database.CreateDepositRequest(reg)
+		rg, err := dao.DB.CreateDepositRequest(reg)
 		if err != nil {
 			logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 			status := http.StatusInternalServerError
-			EncodeStandardResponse(w, status,
+			encodeStandardResponse(w, status,
 				fmt.Sprintf("%s (%s)", http.StatusText(status), err),
 				nil)
 			return
@@ -67,10 +70,17 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	status := http.StatusOK
-	EncodeStandardResponse(w, status, http.StatusText(status), results)
+	encodeStandardResponse(w, status, http.StatusText(status), results)
 }
 
+//
+// RegistrationCreateOptions -- create registration options handler
+//
 func RegistrationCreateOptions(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Methods", "POST")
-	EncodeStandardResponse(w, http.StatusOK, http.StatusText(http.StatusOK), nil)
+	encodeStandardResponse(w, http.StatusOK, http.StatusText(http.StatusOK), nil)
 }
+
+//
+// end of file
+//

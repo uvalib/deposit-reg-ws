@@ -10,6 +10,9 @@ import (
 	"net/http"
 )
 
+//
+// RegistrationDelete - registration delete handler
+//
 func RegistrationDelete(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
@@ -17,25 +20,25 @@ func RegistrationDelete(w http.ResponseWriter, r *http.Request) {
 	token := r.URL.Query().Get("auth")
 
 	// parameters OK ?
-	if NotEmpty(id) == false || NotEmpty(token) == false {
+	if notEmpty(id) == false || notEmpty(token) == false {
 		status := http.StatusBadRequest
-		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeStandardResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
 	// validate the token
 	if authtoken.Validate(config.Configuration.AuthTokenEndpoint, token, config.Configuration.Timeout) == false {
 		status := http.StatusForbidden
-		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeStandardResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
 	// get the request details
-	count, err := dao.Database.DeleteDepositRequest(id)
+	count, err := dao.DB.DeleteDepositRequest(id)
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError
-		EncodeStandardResponse(w, status,
+		encodeStandardResponse(w, status,
 			fmt.Sprintf("%s (%s)", http.StatusText(status), err),
 			nil)
 		return
@@ -43,10 +46,14 @@ func RegistrationDelete(w http.ResponseWriter, r *http.Request) {
 
 	if count == 0 {
 		status := http.StatusNotFound
-		EncodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeStandardResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
 	status := http.StatusOK
-	EncodeStandardResponse(w, status, http.StatusText(status), nil)
+	encodeStandardResponse(w, status, http.StatusText(status), nil)
 }
+
+//
+// end of file
+//
