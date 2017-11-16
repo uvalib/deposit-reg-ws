@@ -21,7 +21,7 @@ func encodeStandardResponse(w http.ResponseWriter, status int, message string, d
    }
 }
 
-func encodeOptionsResponse(w http.ResponseWriter, status int, message string, options *api.Options) {
+func encodeOptionsResponse(w http.ResponseWriter, status int, message string, options []api.Options) {
 
    jsonAttributes(w)
    coorsAttributes(w)

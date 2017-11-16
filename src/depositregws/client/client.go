@@ -101,7 +101,7 @@ func RuntimeCheck(endpoint string) (int, *api.RuntimeResponse) {
 //
 // GetOptions -- calls the service get options method
 //
-func GetOptions(endpoint string) (int, *api.Options) {
+func GetOptions(endpoint string) (int, []api.Options) {
 
    url := fmt.Sprintf("%s/options", endpoint)
    //fmt.Printf( "%s\n", url )

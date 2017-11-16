@@ -15,6 +15,14 @@ type dbStruct struct {
 }
 
 //
+// StringPair -- used for some results; not idiomatic
+//
+type StringPair struct {
+   A string
+   B string
+}
+
+//
 // DB -- the database instance
 //
 var DB *dbStruct
@@ -104,14 +112,24 @@ func (db *dbStruct) DeleteDepositRequest(id string) (int64, error) {
    return rowCount, nil
 }
 
-func (db *dbStruct) GetFieldSet(fieldName string) ([]string, error) {
-   rows, err := db.Query("SELECT field_value FROM fieldvalues WHERE field_name = ? ORDER BY field_value ASC", fieldName)
+//func (db *dbStruct) GetFieldSet(fieldName string) ([]string, error) {
+//   rows, err := db.Query("SELECT field_value FROM fieldvalues WHERE field_name = ? ORDER BY field_value ASC", fieldName)
+//   if err != nil {
+//      return nil, err
+//   }
+//   defer rows.Close()
+//
+//   return fieldSetResults(rows)
+//}
+
+func (db *dbStruct) GetOptionsSet( ) ([]StringPair, error) {
+   rows, err := db.Query("SELECT d1.field_value, d2.field_value FROM fieldvalues d1, fieldvalues d2, fieldmaps m WHERE m.source_id = d1.id AND m.map_id = d2.id ORDER BY 1, 2 ASC" )
    if err != nil {
       return nil, err
    }
    defer rows.Close()
 
-   return fieldSetResults(rows)
+   return optionsMapResults(rows)
 }
 
 func depositRequestResults(rows *sql.Rows) ([]*api.Registration, error) {
@@ -145,19 +163,36 @@ func depositRequestResults(rows *sql.Rows) ([]*api.Registration, error) {
    return results, nil
 }
 
-func fieldSetResults(rows *sql.Rows) ([]string, error) {
+//func fieldSetResults(rows *sql.Rows) ([]string, error) {
+//
+//   results := make([]string, 0)
+//   for rows.Next() {
+//      var s string
+//      err := rows.Scan(&s)
+//      if err != nil {
+//         return nil, err
+//      }
+//      results = append(results, s)
+//   }
+//
+//   logger.Log(fmt.Sprintf("Field set request returns %d row(s)", len(results)))
+//   return results, nil
+//}
 
-   results := make([]string, 0)
+func optionsMapResults(rows *sql.Rows) ([]StringPair, error) {
+
+   results := make([]StringPair, 0)
    for rows.Next() {
-      var s string
-      err := rows.Scan(&s)
+      var school string
+      var degree string
+      err := rows.Scan( &school, &degree )
       if err != nil {
          return nil, err
       }
-      results = append(results, s)
+      results = append(results, StringPair{ A: school, B: degree })
    }
 
-   logger.Log(fmt.Sprintf("Field set request returns %d row(s)", len(results)))
+   logger.Log(fmt.Sprintf("Options map request returns %d row(s)", len(results)))
    return results, nil
 }
 

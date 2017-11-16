@@ -13,21 +13,7 @@ import (
 //
 func OptionsGet(w http.ResponseWriter, r *http.Request) {
 
-   //token := r.URL.Query( ).Get( "auth" )
-
-   // parameters OK ?
-   //if notEmpty( token ) == false {
-   //    encodeOptionsResponse( w, http.StatusBadRequest, http.StatusText( http.StatusBadRequest ), nil )
-   //    return
-   //}
-
-   // validate the token
-   //if authtoken.Validate( config.Configuration.AuthTokenEndpoint, token ) == false {
-   //    encodeOptionsResponse( w, http.StatusForbidden, http.StatusText( http.StatusForbidden ), nil )
-   //    return
-   //}
-
-   departments, err := dao.DB.GetFieldSet("department")
+   optionsSet, err := dao.DB.GetOptionsSet( )
    if err != nil {
       logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
       status := http.StatusInternalServerError
@@ -37,20 +23,35 @@ func OptionsGet(w http.ResponseWriter, r *http.Request) {
       return
    }
 
-   degrees, err := dao.DB.GetFieldSet("degree")
-   if err != nil {
-      logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
-      status := http.StatusInternalServerError
-      encodeOptionsResponse(w, status,
-         fmt.Sprintf("%s (%s)", http.StatusText(status), err),
-         nil)
-      return
-   }
-
-   options := api.Options{Department: departments, Degree: degrees}
+   options := createOptions( optionsSet )
 
    status := http.StatusOK
-   encodeOptionsResponse(w, status, http.StatusText(status), &options)
+   encodeOptionsResponse(w, status, http.StatusText(status), options)
+}
+
+func createOptions( pairs [] dao.StringPair ) []api.Options {
+
+   results := make([]api.Options, 0)
+   for _, v := range pairs {
+      ix := indexOf( results, v.A )
+      if ix >= 0 {
+         results[ ix ].Degrees = append( results[ ix ].Degrees, v.B )
+      } else {
+         results = append( results, api.Options{ Department: v.A, Degrees: []string{ v.B } })
+      }
+   }
+   return( results )
+}
+
+func indexOf( options []api.Options, option string ) int {
+   for ix, v := range options {
+
+      if v.Department == option {
+         return ix
+      }
+   }
+   // not found
+   return -1
 }
 
 //
