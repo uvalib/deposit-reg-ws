@@ -4,7 +4,7 @@ package api
 // HealthCheckResponse -- response to the health check query
 //
 type HealthCheckResponse struct {
-   CheckType HealthCheckResult `json:"mysql"`
+	CheckType HealthCheckResult `json:"mysql"`
 }
 
 //

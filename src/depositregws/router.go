@@ -15,7 +15,7 @@ type route struct {
 
 type routeSlice []route
 
-var routes = routeSlice {
+var routes = routeSlice{
 
 	route{
 		"HealthCheck",
