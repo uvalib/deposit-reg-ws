@@ -67,24 +67,20 @@ INSERT INTO fieldmaps( source_id, map_id ) VALUES(
 );
 
 --
--- Department of Engineering Physics
+-- Engineering Physics
 INSERT INTO fieldmaps( source_id, map_id ) VALUES(
-  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Department of Engineering Physics" ),
+  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Engineering Physics" ),
   ( SELECT id from fieldvalues where field_name = "degree" AND field_value = "ME (Master of Engineering)" )
 );
 INSERT INTO fieldmaps( source_id, map_id ) VALUES(
-  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Department of Engineering Physics" ),
+  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Engineering Physics" ),
   ( SELECT id from fieldvalues where field_name = "degree" AND field_value = "MEP (Master of Engineering Physics)" )
 );
 
 --
--- Department of Engineering Science
+-- Engineering Science
 INSERT INTO fieldmaps( source_id, map_id ) VALUES(
-  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Department of Engineering Science" ),
-  ( SELECT id from fieldvalues where field_name = "degree" AND field_value = "ME (Master of Engineering)" )
-);
-INSERT INTO fieldmaps( source_id, map_id ) VALUES(
-  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Department of Engineering Science" ),
+  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Engineering Science" ),
   ( SELECT id from fieldvalues where field_name = "degree" AND field_value = "BS (Bachelor of Science)" )
 );
 
@@ -122,6 +118,20 @@ INSERT INTO fieldmaps( source_id, map_id ) VALUES(
 INSERT INTO fieldmaps( source_id, map_id ) VALUES(
   ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Department of Urban and Environmental Planning" ),
   ( SELECT id from fieldvalues where field_name = "degree" AND field_value = "BUEP (Bachelor of Urban and Environmental Planning)" )
+);
+
+--
+-- Computer Engineering
+INSERT INTO fieldmaps( source_id, map_id ) VALUES(
+  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Computer Engineering" ),
+  ( SELECT id from fieldvalues where field_name = "degree" AND field_value = "ME (Master of Engineering)" )
+);
+
+--
+-- Data Science Institute
+INSERT INTO fieldmaps( source_id, map_id ) VALUES(
+  ( SELECT id from fieldvalues where field_name = "department" AND field_value = "Data Science Institute" ),
+  ( SELECT id from fieldvalues where field_name = "degree" AND field_value = "MSDS (Master of Science in Data Science)" )
 );
 
 -- end of file
