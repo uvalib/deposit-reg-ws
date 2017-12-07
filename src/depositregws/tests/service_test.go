@@ -39,7 +39,7 @@ func ensureValidRegistrations(t *testing.T, details []*api.Registration) {
 	}
 }
 
-func ensureValidOptions(t *testing.T, options []api.Options) {
+func ensureValidMappedOptions(t *testing.T, options []api.DepartmentMap) {
 
 	for _, o := range options {
 		if emptyField(o.Department) {
@@ -49,6 +49,20 @@ func ensureValidOptions(t *testing.T, options []api.Options) {
 			if emptyField(d) {
 				t.Fatalf("Expected non-empty degree field but one is empty\n")
 			}
+		}
+	}
+}
+
+func ensureValidOptions(t *testing.T, options api.Options) {
+
+	for _, dep := range options.Departments {
+		if emptyField(dep) {
+			t.Fatalf("Expected non-empty department field but one is empty\n")
+		}
+	}
+	for _, deg := range options.Degrees {
+		if emptyField(deg) {
+			t.Fatalf("Expected non-empty degree field but one is empty\n")
 		}
 	}
 }

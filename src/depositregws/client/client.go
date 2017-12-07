@@ -99,9 +99,39 @@ func RuntimeCheck(endpoint string) (int, *api.RuntimeResponse) {
 }
 
 //
-// GetOptions -- calls the service get options method
+// GetMappedOptions -- calls the service get the mapped options method
 //
-func GetOptions(endpoint string) (int, []api.Options) {
+func GetMappedOptions(endpoint string) (int, []api.DepartmentMap) {
+
+	url := fmt.Sprintf("%s/optionmap", endpoint)
+	//fmt.Printf( "%s\n", url )
+
+	resp, body, errs := gorequest.New().
+		SetDebug(debugHTTP).
+		Get(url).
+		Timeout(time.Duration(serviceTimeout) * time.Second).
+		End()
+
+	if errs != nil {
+		return http.StatusInternalServerError, nil
+	}
+
+	defer io.Copy(ioutil.Discard, resp.Body)
+	defer resp.Body.Close()
+
+	r := api.OptionMapResponse{}
+	err := json.Unmarshal([]byte(body), &r)
+	if err != nil {
+		return http.StatusInternalServerError, nil
+	}
+
+	return resp.StatusCode, r.Options
+}
+
+//
+// GetOptions -- calls the service get the options method
+//
+func GetOptions(endpoint string) (int, *api.Options) {
 
 	url := fmt.Sprintf("%s/options", endpoint)
 	//fmt.Printf( "%s\n", url )
@@ -125,7 +155,7 @@ func GetOptions(endpoint string) (int, []api.Options) {
 		return http.StatusInternalServerError, nil
 	}
 
-	return resp.StatusCode, r.Options
+	return resp.StatusCode, &r.Options
 }
 
 //

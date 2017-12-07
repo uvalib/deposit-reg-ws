@@ -39,7 +39,14 @@ var routes = routeSlice{
 	},
 
 	route{
-		"OptionsGet",
+		"OptionMapGet",
+		"GET",
+		"/optionmap",
+		handlers.OptionMapGet,
+	},
+
+	route{
+		"OptionMapGet",
 		"GET",
 		"/options",
 		handlers.OptionsGet,

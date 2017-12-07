@@ -21,7 +21,17 @@ func encodeStandardResponse(w http.ResponseWriter, status int, message string, d
 	}
 }
 
-func encodeOptionsResponse(w http.ResponseWriter, status int, message string, options []api.Options) {
+func encodeOptionMapResponse(w http.ResponseWriter, status int, message string, options []api.DepartmentMap) {
+
+	jsonAttributes(w)
+	coorsAttributes(w)
+	w.WriteHeader(status)
+	if err := json.NewEncoder(w).Encode(api.OptionMapResponse{Status: status, Message: message, Options: options}); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func encodeOptionsResponse(w http.ResponseWriter, status int, message string, options api.Options) {
 
 	jsonAttributes(w)
 	coorsAttributes(w)

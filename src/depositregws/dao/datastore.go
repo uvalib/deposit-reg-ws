@@ -112,7 +112,7 @@ func (db *dbStruct) DeleteDepositRequest(id string) (int64, error) {
 	return rowCount, nil
 }
 
-func (db *dbStruct) GetOptionsSet() ([]StringPair, error) {
+func (db *dbStruct) GetMappedOptions() ([]StringPair, error) {
 	rows, err := db.Query("SELECT d1.field_value, d2.field_value FROM fieldvalues d1, fieldvalues d2, fieldmaps m WHERE m.source_id = d1.id AND m.map_id = d2.id ORDER BY 1, 2 ASC")
 	if err != nil {
 		return nil, err
@@ -120,6 +120,16 @@ func (db *dbStruct) GetOptionsSet() ([]StringPair, error) {
 	defer rows.Close()
 
 	return optionsMapResults(rows)
+}
+
+func (db *dbStruct) GetAllOptions() ([]StringPair, error) {
+	rows, err := db.Query("SELECT field_name, field_value from fieldvalues ORDER BY 1, 2 ASC")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	return optionsResults(rows)
 }
 
 func depositRequestResults(rows *sql.Rows) ([]*api.Registration, error) {
@@ -167,6 +177,23 @@ func optionsMapResults(rows *sql.Rows) ([]StringPair, error) {
 	}
 
 	logger.Log(fmt.Sprintf("Options map request returns %d row(s)", len(results)))
+	return results, nil
+}
+
+func optionsResults(rows *sql.Rows) ([]StringPair, error) {
+
+	results := make([]StringPair, 0)
+	for rows.Next() {
+		var name string
+		var value string
+		err := rows.Scan(&name, &value)
+		if err != nil {
+			return nil, err
+		}
+		results = append(results, StringPair{A: name, B: value})
+	}
+
+	logger.Log(fmt.Sprintf("Options request returns %d row(s)", len(results)))
 	return results, nil
 }
 

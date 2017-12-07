@@ -13,13 +13,13 @@ import (
 //
 func OptionsGet(w http.ResponseWriter, r *http.Request) {
 
-	optionsSet, err := dao.DB.GetOptionsSet()
+	optionsSet, err := dao.DB.GetAllOptions()
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError
 		encodeOptionsResponse(w, status,
 			fmt.Sprintf("%s (%s)", http.StatusText(status), err),
-			nil)
+			api.Options{})
 		return
 	}
 
@@ -29,29 +29,17 @@ func OptionsGet(w http.ResponseWriter, r *http.Request) {
 	encodeOptionsResponse(w, status, http.StatusText(status), options)
 }
 
-func createOptions(pairs []dao.StringPair) []api.Options {
+func createOptions(pairs []dao.StringPair) api.Options {
 
-	results := make([]api.Options, 0)
+	results := api.Options{}
 	for _, v := range pairs {
-		ix := indexOf(results, v.A)
-		if ix >= 0 {
-			results[ix].Degrees = append(results[ix].Degrees, v.B)
-		} else {
-			results = append(results, api.Options{Department: v.A, Degrees: []string{v.B}})
+		if v.A == "department" {
+			results.Departments = append(results.Departments, v.B)
+		} else if v.A == "degree" {
+			results.Degrees = append(results.Degrees, v.B)
 		}
 	}
-	return (results)
-}
-
-func indexOf(options []api.Options, option string) int {
-	for ix, v := range options {
-
-		if v.Department == option {
-			return ix
-		}
-	}
-	// not found
-	return -1
+	return results
 }
 
 //
