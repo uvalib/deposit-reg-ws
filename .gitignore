@@ -4,5 +4,6 @@
 /bin
 /pkg
 /env.*
+/scripts/load/env.*
 /src/depositregws/tests/service_test.yml
 /buildtag.build-0
