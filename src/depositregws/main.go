@@ -16,10 +16,12 @@ func main() {
 	logger.Log(fmt.Sprintf("===> version: '%s' <===", handlers.Version()))
 
 	// access the database
-	connectStr := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowOldPasswords=1", config.Configuration.DbUser,
-		config.Configuration.DbPassphrase, config.Configuration.DbHost, config.Configuration.DbName)
-
-	err := dao.NewDB(connectStr)
+	err := dao.NewDB(
+		config.Configuration.DbHost,
+		config.Configuration.DbName,
+		config.Configuration.DbUser,
+		config.Configuration.DbPassphrase,
+		config.Configuration.DbTimeout)
 	if err != nil {
 		log.Fatal(err)
 	}

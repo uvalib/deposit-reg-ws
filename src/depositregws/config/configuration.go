@@ -16,6 +16,7 @@ type Config struct {
 	DbName            string
 	DbUser            string
 	DbPassphrase      string
+	DbTimeout         string
 	AuthTokenEndpoint string
 	Timeout           int
 	Debug             bool
@@ -28,7 +29,8 @@ var Configuration = loadConfig()
 
 func loadConfig() Config {
 
-	c := Config{}
+	// default value for the database timeout
+	c := Config{ DbTimeout: "15s" }
 
 	// process command line flags and setup configuration
 	flag.StringVar(&c.ServicePort, "port", "8080", "The service listen port")
@@ -47,6 +49,7 @@ func loadConfig() Config {
 	logger.Log(fmt.Sprintf("DbName:            %s", c.DbName))
 	logger.Log(fmt.Sprintf("DbUser:            %s", c.DbUser))
 	logger.Log(fmt.Sprintf("DbPassphrase:      %s", strings.Repeat("*", len(c.DbPassphrase))))
+	logger.Log(fmt.Sprintf("DbTimeout:         %s", c.DbTimeout))
 	logger.Log(fmt.Sprintf("AuthTokenEndpoint  %s", c.AuthTokenEndpoint))
 	logger.Log(fmt.Sprintf("Timeout:           %d", c.Timeout))
 	logger.Log(fmt.Sprintf("Debug              %t", c.Debug))
