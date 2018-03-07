@@ -18,7 +18,7 @@ type Config struct {
 	DbPassphrase      string
 	DbTimeout         string
 	AuthTokenEndpoint string
-	Timeout           int
+	ServiceTimeout    int
 	Debug             bool
 }
 
@@ -39,7 +39,7 @@ func loadConfig() Config {
 	flag.StringVar(&c.DbUser, "dbuser", "depositreg", "The database username")
 	flag.StringVar(&c.DbPassphrase, "dbpassword", "", "The database passphrase")
 	flag.StringVar(&c.AuthTokenEndpoint, "tokenauth", "http://docker1.lib.virginia.edu:8200", "The token authentication endpoint")
-	flag.IntVar(&c.Timeout, "timeout", 15, "The external service timeout in seconds")
+	flag.IntVar(&c.ServiceTimeout, "timeout", 15, "The external service timeout in seconds")
 	flag.BoolVar(&c.Debug, "debug", false, "Enable debugging")
 
 	flag.Parse()
@@ -51,7 +51,7 @@ func loadConfig() Config {
 	logger.Log(fmt.Sprintf("DbPassphrase:      %s", strings.Repeat("*", len(c.DbPassphrase))))
 	logger.Log(fmt.Sprintf("DbTimeout:         %s", c.DbTimeout))
 	logger.Log(fmt.Sprintf("AuthTokenEndpoint  %s", c.AuthTokenEndpoint))
-	logger.Log(fmt.Sprintf("Timeout:           %d", c.Timeout))
+	logger.Log(fmt.Sprintf("ServiceTimeout:    %d", c.ServiceTimeout))
 	logger.Log(fmt.Sprintf("Debug              %t", c.Debug))
 
 	return c
