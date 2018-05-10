@@ -15,7 +15,7 @@ ENV APP_HOME /depositreg-ws
 WORKDIR $APP_HOME
 
 # Create necessary directories
-RUN mkdir -p $APP_HOME/scripts $APP_HOME/bin
+RUN mkdir -p $APP_HOME/scripts $APP_HOME/bin $APP_HOME/assets
 RUN chown -R webservice $APP_HOME && chgrp -R webservice $APP_HOME
 
 # Specify the user
@@ -29,6 +29,7 @@ CMD scripts/entry.sh
 COPY data/container_bash_profile /home/webservice/.profile
 COPY scripts/entry.sh $APP_HOME/scripts/entry.sh
 COPY bin/deposit-reg-ws.linux $APP_HOME/bin/deposit-reg-ws
+COPY assets/* $APP_HOME/assets/
 
 # Add the build tag
 COPY buildtag.* $APP_HOME/
