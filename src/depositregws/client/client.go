@@ -150,6 +150,28 @@ func GetOptions(endpoint string) (int, *api.Options) {
 }
 
 //
+// AddOption -- calls the service add option method
+//
+func AddOption( endpoint string, option api.Option, token string ) int {
+
+	url := fmt.Sprintf("%s/options?auth=%s", endpoint, token )
+	fmt.Printf( "%s\n", url )
+
+	return http.StatusInternalServerError
+}
+
+//
+// AddOptionMap -- calls the service add option method
+//
+func AddOptionMap( endpoint string, option api.DepartmentMap, token string ) int {
+
+	url := fmt.Sprintf("%s/optionmap?auth=%s", endpoint, token )
+	fmt.Printf( "%s\n", url )
+
+	return http.StatusInternalServerError
+}
+
+//
 // GetDepositRequest -- calls the service get deposit request method
 //
 func GetDepositRequest(endpoint string, id string, token string) (int, []*api.Registration) {

@@ -101,6 +101,20 @@ func makeMultiRegistration() api.Registration {
 		Degree:     "Ph.D"}
 }
 
+func makeNewOption( ) api.Option {
+
+	return api.Option{
+
+	}
+}
+
+func makeOptionMap( ) api.DepartmentMap {
+
+	return api.DepartmentMap{
+
+	}
+}
+
 func loadConfig() testConfig {
 
 	data, err := ioutil.ReadFile("service_test.yml")

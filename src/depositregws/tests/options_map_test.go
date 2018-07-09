@@ -7,16 +7,17 @@ import (
 )
 
 //
-// option map tests
+// options map tests
 //
 
-func TestOptionMapHappyDay(t *testing.T) {
+func TestOptionsMapHappyDay(t *testing.T) {
 	expected := http.StatusOK
 	status, options := client.GetMappedOptions(cfg.Endpoint)
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
-	ensureValidMappedOptions(t, options)
+
+	ensureValidMappedOptions( t, options )
 }
 
 //
