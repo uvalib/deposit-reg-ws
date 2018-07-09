@@ -155,7 +155,7 @@ func GetOptions(endpoint string) (int, *api.Options) {
 func AddOption( endpoint string, option api.Option, token string ) int {
 
 	url := fmt.Sprintf("%s/options?auth=%s", endpoint, token )
-	fmt.Printf( "%s\n", url )
+	//fmt.Printf( "%s\n", url )
 
 	resp, body, errs := gorequest.New().
 		SetDebug(debugHTTP).
@@ -187,7 +187,7 @@ func AddOption( endpoint string, option api.Option, token string ) int {
 func AddOptionMap( endpoint string, optionMap api.DepartmentMap, token string ) int {
 
 	url := fmt.Sprintf("%s/optionmap?auth=%s", endpoint, token )
-	fmt.Printf( "%s\n", url )
+	//fmt.Printf( "%s\n", url )
 
 	resp, body, errs := gorequest.New().
 		SetDebug(debugHTTP).

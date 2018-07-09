@@ -140,6 +140,17 @@ func (db *dbStruct) GetAllOptions() ([]StringPair, error) {
 	return optionsResults(rows)
 }
 
+func (db *dbStruct) CreateOption( option api.Option ) error {
+
+	return nil
+}
+
+
+func (db *dbStruct) UpdateOptionMap( optionMap api.DepartmentMap ) error {
+
+	return nil
+}
+
 func depositRequestResults(rows *sql.Rows) ([]*api.Registration, error) {
 
 	var optional sql.NullString
