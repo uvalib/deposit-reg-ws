@@ -10,13 +10,24 @@ import (
 	"strings"
 )
 
-func encodeStandardResponse(w http.ResponseWriter, status int, message string, details []*api.Registration) {
+func encodeStandardResponse(w http.ResponseWriter, status int, message string ) {
 
 	logger.Log(fmt.Sprintf("Status: %d (%s)\n", status, message))
 	jsonAttributes(w)
 	coorsAttributes(w)
 	w.WriteHeader(status)
-	if err := json.NewEncoder(w).Encode(api.StandardResponse{Status: status, Message: message, Details: details}); err != nil {
+	if err := json.NewEncoder(w).Encode(api.StandardResponse{Status: status, Message: message}); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func encodeRegistrationResponse(w http.ResponseWriter, status int, message string, details []*api.Registration) {
+
+	logger.Log(fmt.Sprintf("Status: %d (%s)\n", status, message))
+	jsonAttributes(w)
+	coorsAttributes(w)
+	w.WriteHeader(status)
+	if err := json.NewEncoder(w).Encode(api.RegistrationResponse{Status: status, Message: message, Details: details}); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -65,10 +76,6 @@ func jsonAttributes(w http.ResponseWriter) {
 func coorsAttributes(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-}
-
-func jsonResponse(w http.ResponseWriter) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 }
 
 func notEmpty(param string) bool {

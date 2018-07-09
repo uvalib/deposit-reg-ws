@@ -20,14 +20,14 @@ func RegistrationSearch(w http.ResponseWriter, r *http.Request) {
 	// parameters OK ?
 	if notEmpty(token) == false || notEmpty(id) == false {
 		status := http.StatusBadRequest
-		encodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeRegistrationResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
 	// validate the token
 	if authtoken.Validate(config.Configuration.AuthTokenEndpoint, token, config.Configuration.ServiceTimeout) == false {
 		status := http.StatusForbidden
-		encodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeRegistrationResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
@@ -36,7 +36,7 @@ func RegistrationSearch(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError
-		encodeStandardResponse(w, status,
+		encodeRegistrationResponse(w, status,
 			fmt.Sprintf("%s (%s)", http.StatusText(status), err),
 			nil)
 		return
@@ -44,12 +44,12 @@ func RegistrationSearch(w http.ResponseWriter, r *http.Request) {
 
 	if reqs == nil || len(reqs) == 0 {
 		status := http.StatusNotFound
-		encodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeRegistrationResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
 	status := http.StatusOK
-	encodeStandardResponse(w, status, http.StatusText(status), reqs)
+	encodeRegistrationResponse(w, status, http.StatusText(status), reqs)
 }
 
 //

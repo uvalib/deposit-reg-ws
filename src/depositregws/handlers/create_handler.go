@@ -24,14 +24,14 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 	// parameters OK ?
 	if notEmpty(token) == false {
 		status := http.StatusBadRequest
-		encodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeRegistrationResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
 	// validate the token
 	if authtoken.Validate(config.Configuration.AuthTokenEndpoint, token, config.Configuration.ServiceTimeout) == false {
 		status := http.StatusForbidden
-		encodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeRegistrationResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
@@ -40,7 +40,7 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 
 	if err := decoder.Decode(&reg); err != nil {
 		status := http.StatusBadRequest
-		encodeStandardResponse(w, status, http.StatusText(status), nil)
+		encodeRegistrationResponse(w, status, http.StatusText(status), nil)
 		return
 	}
 
@@ -60,7 +60,7 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 			status := http.StatusInternalServerError
-			encodeStandardResponse(w, status,
+			encodeRegistrationResponse(w, status,
 				fmt.Sprintf("%s (%s)", http.StatusText(status), err),
 				nil)
 			return
@@ -70,7 +70,7 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	status := http.StatusOK
-	encodeStandardResponse(w, status, http.StatusText(status), results)
+	encodeRegistrationResponse(w, status, http.StatusText(status), results)
 }
 
 //
@@ -78,7 +78,7 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 //
 func RegistrationCreateOptions(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Methods", "POST")
-	encodeStandardResponse(w, http.StatusOK, http.StatusText(http.StatusOK), nil)
+	encodeRegistrationResponse(w, http.StatusOK, http.StatusText(http.StatusOK), nil)
 }
 
 //

@@ -48,10 +48,24 @@ var routes = routeSlice{
 	},
 
 	route{
+		"OptionMapUpdate",
+		"PUT",
+		"/optionmap",
+		handlers.OptionMapUpdate,
+	},
+
+	route{
 		"OptionsGet",
 		"GET",
 		"/options",
 		handlers.OptionsGet,
+	},
+
+	route{
+		"OptionCreate",
+		"POST",
+		"/options",
+		handlers.OptionCreate,
 	},
 
 	route{

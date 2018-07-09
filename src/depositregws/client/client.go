@@ -157,18 +157,60 @@ func AddOption( endpoint string, option api.Option, token string ) int {
 	url := fmt.Sprintf("%s/options?auth=%s", endpoint, token )
 	fmt.Printf( "%s\n", url )
 
-	return http.StatusInternalServerError
+	resp, body, errs := gorequest.New().
+		SetDebug(debugHTTP).
+		Post(url).
+		Send(option).
+		Timeout(time.Duration(serviceTimeout)*time.Second).
+		Set("Content-Type", "application/json").
+		End()
+
+	if errs != nil {
+		return http.StatusInternalServerError
+	}
+
+	defer io.Copy(ioutil.Discard, resp.Body)
+	defer resp.Body.Close()
+
+	r := api.StandardResponse{}
+	err := json.Unmarshal([]byte(body), &r)
+	if err != nil {
+		return http.StatusInternalServerError
+	}
+
+	return resp.StatusCode
 }
 
 //
 // AddOptionMap -- calls the service add option method
 //
-func AddOptionMap( endpoint string, option api.DepartmentMap, token string ) int {
+func AddOptionMap( endpoint string, optionMap api.DepartmentMap, token string ) int {
 
 	url := fmt.Sprintf("%s/optionmap?auth=%s", endpoint, token )
 	fmt.Printf( "%s\n", url )
 
-	return http.StatusInternalServerError
+	resp, body, errs := gorequest.New().
+		SetDebug(debugHTTP).
+		Put(url).
+		Send(optionMap).
+		Timeout(time.Duration(serviceTimeout)*time.Second).
+		Set("Content-Type", "application/json").
+		End()
+
+	if errs != nil {
+		return http.StatusInternalServerError
+	}
+
+	defer io.Copy(ioutil.Discard, resp.Body)
+	defer resp.Body.Close()
+
+	r := api.StandardResponse{}
+	err := json.Unmarshal([]byte(body), &r)
+	if err != nil {
+		return http.StatusInternalServerError
+	}
+
+	return resp.StatusCode
 }
 
 //
@@ -192,7 +234,7 @@ func GetDepositRequest(endpoint string, id string, token string) (int, []*api.Re
 	defer io.Copy(ioutil.Discard, resp.Body)
 	defer resp.Body.Close()
 
-	r := api.StandardResponse{}
+	r := api.RegistrationResponse{}
 	err := json.Unmarshal([]byte(body), &r)
 	if err != nil {
 		return http.StatusInternalServerError, nil
@@ -222,7 +264,7 @@ func SearchDepositRequest(endpoint string, id string, token string) (int, []*api
 	defer io.Copy(ioutil.Discard, resp.Body)
 	defer resp.Body.Close()
 
-	r := api.StandardResponse{}
+	r := api.RegistrationResponse{}
 	err := json.Unmarshal([]byte(body), &r)
 	if err != nil {
 		return http.StatusInternalServerError, nil
@@ -254,7 +296,7 @@ func CreateDepositRequest(endpoint string, reg api.Registration, token string) (
 	defer io.Copy(ioutil.Discard, resp.Body)
 	defer resp.Body.Close()
 
-	r := api.StandardResponse{}
+	r := api.RegistrationResponse{}
 	err := json.Unmarshal([]byte(body), &r)
 	if err != nil {
 		return http.StatusInternalServerError, nil
@@ -288,7 +330,7 @@ func DeleteDepositRequest(endpoint string, id string, token string) int {
 	defer io.Copy(ioutil.Discard, resp.Body)
 	defer resp.Body.Close()
 
-	r := api.StandardResponse{}
+	r := api.RegistrationResponse{}
 	err := json.Unmarshal([]byte(body), &r)
 	if err != nil {
 		return http.StatusInternalServerError
