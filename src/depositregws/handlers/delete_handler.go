@@ -20,7 +20,7 @@ func RegistrationDelete(w http.ResponseWriter, r *http.Request) {
 	token := r.URL.Query().Get("auth")
 
 	// parameters OK ?
-	if notEmpty(id) == false || notEmpty(token) == false {
+	if isEmpty(id) == true || isEmpty(token) == true {
 		status := http.StatusBadRequest
 		encodeRegistrationResponse(w, status, http.StatusText(status), nil)
 		return

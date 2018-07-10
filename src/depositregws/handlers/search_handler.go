@@ -18,7 +18,7 @@ func RegistrationSearch(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("later")
 
 	// parameters OK ?
-	if notEmpty(token) == false || notEmpty(id) == false {
+	if isEmpty(token) == true || isEmpty(id) == true {
 		status := http.StatusBadRequest
 		encodeRegistrationResponse(w, status, http.StatusText(status), nil)
 		return
