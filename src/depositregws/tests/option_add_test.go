@@ -7,9 +7,6 @@ import (
 	"depositregws/api"
 )
 
-var departmentType = "department"
-var degreeType = "degree"
-
 //
 // option add tests
 //

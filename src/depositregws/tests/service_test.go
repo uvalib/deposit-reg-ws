@@ -27,6 +27,8 @@ var goodToken = cfg.Token
 var badToken = "badness"
 var empty = " "
 var numericChars = "0123456789"
+var departmentType = "department"
+var degreeType = "degree"
 
 func ensureValidRegistrations(t *testing.T, details []*api.Registration) {
 

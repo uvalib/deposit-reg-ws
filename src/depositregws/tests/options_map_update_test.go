@@ -16,7 +16,7 @@ var badDegree = "aaabbbccc"
 
 func TestOptionsMapUpdateHappyDay(t *testing.T) {
 	expected := http.StatusOK
-	optionMap := makeGoodOptionsMap( t )
+	optionMap := makeNewOptionsMap( t )
 	status := client.AddOptionMap(cfg.Endpoint, optionMap, goodToken)
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
@@ -64,6 +64,37 @@ func TestOptionsMapUpdateBadToken(t *testing.T) {
 	status := client.AddOptionMap(cfg.Endpoint, optionMap, badToken)
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
+	}
+}
+
+func makeNewOptionsMap( t *testing.T ) api.DepartmentMap {
+
+	expected := http.StatusOK
+	departmentOption := makeNewOption( departmentType )
+	status := client.AddOption(cfg.Endpoint, departmentOption, goodToken)
+	if status != expected {
+		t.Fatalf("Expected %v, got %v\n", expected, status)
+	}
+
+	degreeOneOption := makeNewOption( degreeType )
+	status = client.AddOption(cfg.Endpoint, degreeOneOption, goodToken)
+	if status != expected {
+		t.Fatalf("Expected %v, got %v\n", expected, status)
+	}
+
+	degreeTwoOption := makeNewOption( degreeType )
+	status = client.AddOption(cfg.Endpoint, degreeTwoOption, goodToken)
+	if status != expected {
+		t.Fatalf("Expected %v, got %v\n", expected, status)
+	}
+
+	degrees := make( [] string, 2 )
+	degrees[ 0 ] = degreeOneOption.Value
+	degrees[ 1 ] = degreeTwoOption.Value
+
+	return api.DepartmentMap {
+		Department: departmentOption.Value,
+		Degrees: degrees,
 	}
 }
 
