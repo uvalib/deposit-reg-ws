@@ -78,9 +78,19 @@ func coorsAttributes(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
+func anyEmpty( params[] string ) bool {
+   for _, s := range params {
+   	  if isEmpty( s ) {
+   	  	return true
+	  }
+   }
+   return false
+}
+
 func isEmpty(param string) bool {
 	return len(strings.TrimSpace(param)) == 0
 }
+
 
 //
 // end of file

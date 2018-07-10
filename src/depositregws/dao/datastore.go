@@ -158,6 +158,41 @@ func (db *dbStruct) CreateOption( option api.Option ) error {
 
 func (db *dbStruct) UpdateOptionMap( optionMap api.DepartmentMap ) error {
 
+	optionsSet, err := db.GetAllOptions( )
+	if err != nil {
+		return err
+	}
+
+	// check the department is already known
+	found := false
+	for _, sp := range optionsSet {
+		if sp.A == "department" && sp.B == optionMap.Department {
+			found = true
+			break
+		}
+	}
+
+	if found == false {
+	   return fmt.Errorf( "department %s does not exist", optionMap.Department )
+	}
+
+	// check each degree is already known
+	for _, degree := range optionMap.Degrees {
+
+		found = false
+		for _, sp := range optionsSet {
+			if sp.A == "degree" && sp.B == degree {
+				found = true
+				break
+			}
+		}
+
+		if found == false {
+			return fmt.Errorf( "degree %s does not exist", degree )
+		}
+	}
+
+
 	return nil
 }
 

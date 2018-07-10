@@ -106,17 +106,16 @@ func makeMultiRegistration() api.Registration {
 }
 
 func makeNewOption( optionType string ) api.Option {
-
 	return api.Option{
 		Option: optionType,
 		Value: fmt.Sprintf( "%s-%s", optionType, randomValue( ) ),
 	}
 }
 
-func makeOptionMap( ) api.DepartmentMap {
-
+func makeOptionMap( department string, degrees [] string ) api.DepartmentMap {
 	return api.DepartmentMap{
-
+		Department: department,
+		Degrees: degrees,
 	}
 }
 

@@ -11,6 +11,7 @@ import (
 	"io"
 	"io/ioutil"
 	"depositregws/dao"
+	"strings"
 )
 
 //
@@ -47,11 +48,22 @@ func OptionMapUpdate(w http.ResponseWriter, r *http.Request) {
 	defer io.Copy(ioutil.Discard, r.Body)
 	defer r.Body.Close()
 
+	// payload OK ?
+	if isEmpty( optionMap.Department ) == true || anyEmpty( optionMap.Degrees ) == true {
+		status := http.StatusBadRequest
+		encodeStandardResponse(w, status, http.StatusText(status))
+		return
+	}
+
 	// update the option map
 	err := dao.DB.UpdateOptionMap( optionMap )
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError
+		// check for a value not found
+		if strings.Contains( err.Error( ), "does not exist" ) == true {
+			status = http.StatusNotFound
+		}
 		encodeStandardResponse(w, status,
 			fmt.Sprintf("%s (%s)", http.StatusText(status), err))
 		return

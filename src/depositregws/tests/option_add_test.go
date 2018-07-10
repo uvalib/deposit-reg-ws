@@ -23,7 +23,7 @@ func TestOptionAddHappyDay(t *testing.T) {
 	}
 }
 
-func TestOptionAddBadOption(t *testing.T) {
+func TestOptionAddEmptyOption(t *testing.T) {
 	expected := http.StatusBadRequest
 	status := client.AddOption(cfg.Endpoint, api.Option{}, goodToken)
 	if status != expected {
