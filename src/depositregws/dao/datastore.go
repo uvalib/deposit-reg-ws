@@ -142,6 +142,16 @@ func (db *dbStruct) GetAllOptions() ([]StringPair, error) {
 
 func (db *dbStruct) CreateOption( option api.Option ) error {
 
+	stmt, err := db.Prepare("INSERT INTO fieldvalues( field_name, field_value ) VALUES(?,?)")
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec( option.Option, option.Value )
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 

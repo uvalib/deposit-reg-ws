@@ -7,13 +7,16 @@ import (
 	"depositregws/api"
 )
 
+var departmentType = "department"
+var degreeType = "degree"
+
 //
 // option add tests
 //
 
 func TestOptionAddHappyDay(t *testing.T) {
 	expected := http.StatusOK
-	option := makeNewOption( )
+	option := makeNewOption( departmentType )
 	status := client.AddOption(cfg.Endpoint, option, goodToken)
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
@@ -29,7 +32,7 @@ func TestOptionAddBadOption(t *testing.T) {
 }
 
 func TestOptionAddBadToken(t *testing.T) {
-	option := makeNewOption( )
+	option := makeNewOption( departmentType )
 	expected := http.StatusForbidden
 	status := client.AddOption(cfg.Endpoint, option, badToken)
 	if status != expected {
@@ -39,7 +42,7 @@ func TestOptionAddBadToken(t *testing.T) {
 
 func TestOptionAddDuplicateOption(t *testing.T) {
 	expected := http.StatusOK
-	option := makeNewOption( )
+	option := makeNewOption( departmentType )
 	status := client.AddOption(cfg.Endpoint, option, goodToken)
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)

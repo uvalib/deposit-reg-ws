@@ -21,7 +21,7 @@ func OptionMapUpdate(w http.ResponseWriter, r *http.Request) {
 	token := r.URL.Query().Get("auth")
 
 	// parameters OK ?
-	if notEmpty(token) == false {
+	if isEmpty(token) == true {
 		status := http.StatusBadRequest
 		encodeStandardResponse(w, status, http.StatusText(status))
 		return

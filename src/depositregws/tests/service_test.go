@@ -9,6 +9,9 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+	"fmt"
+	"math/rand"
+	"time"
 )
 
 type testConfig struct {
@@ -23,6 +26,7 @@ var notFoundID = "x"
 var goodToken = cfg.Token
 var badToken = "badness"
 var empty = " "
+var numericChars = "0123456789"
 
 func ensureValidRegistrations(t *testing.T, details []*api.Registration) {
 
@@ -101,10 +105,11 @@ func makeMultiRegistration() api.Registration {
 		Degree:     "Ph.D"}
 }
 
-func makeNewOption( ) api.Option {
+func makeNewOption( optionType string ) api.Option {
 
 	return api.Option{
-
+		Option: optionType,
+		Value: fmt.Sprintf( "%s-%s", optionType, randomValue( ) ),
 	}
 }
 
@@ -113,6 +118,26 @@ func makeOptionMap( ) api.DepartmentMap {
 	return api.DepartmentMap{
 
 	}
+}
+
+func randomValue( ) string {
+
+	// see the RNG
+	rand.Seed(time.Now().UnixNano())
+
+	// list of possible characters
+	possible := []rune( numericChars )
+
+	return randomString(possible, 10)
+}
+
+func randomString(possible []rune, sz int) string {
+
+	b := make([]rune, sz)
+	for i := range b {
+		b[i] = possible[rand.Intn(len(possible))]
+	}
+	return string(b)
 }
 
 func loadConfig() testConfig {
