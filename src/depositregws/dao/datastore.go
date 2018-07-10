@@ -192,6 +192,49 @@ func (db *dbStruct) UpdateOptionMap( optionMap api.DepartmentMap ) error {
 		}
 	}
 
+	// delete any existing mappings
+    err = db.deleteAllOptionMaps( optionMap.Department )
+	if err != nil {
+		return err
+	}
+
+	// add a mapping for each degree
+	for _, degree := range optionMap.Degrees {
+		err = db.addOptionMap( optionMap.Department, degree )
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (db *dbStruct) deleteAllOptionMaps( department string ) error {
+
+	stmt, err := db.Prepare("DELETE FROM fieldmaps WHERE source_id = ( SELECT id from fieldvalues where field_name = ? AND field_value = ?)" )
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec("department", department )
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (db *dbStruct) addOptionMap( department string, degree string ) error {
+
+	stmt, err := db.Prepare("INSERT INTO fieldmaps( source_id, map_id ) VALUES( ( SELECT id from fieldvalues where field_name = ? AND field_value = ?), ( SELECT id from fieldvalues where field_name = ? AND field_value = ?) )")
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec( "department", department, "degree", degree )
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

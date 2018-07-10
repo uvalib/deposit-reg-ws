@@ -133,6 +133,9 @@ func ensureCorrectMap( t *testing.T, mapSet api.DepartmentMap, allMaps []api.Dep
 				  t.Fatalf("Degree %s not located in options map\n", d )
 		 	   }
 		    }
+
+		    // done checking, all looks good
+		    return
 		}
 	}
 	t.Fatalf("Department %s not located in options map\n", mapSet.Department )
