@@ -33,6 +33,16 @@ func createOptionsMap(pairs []dao.StringPair) []api.DepartmentMap {
 
 	results := make([]api.DepartmentMap, 0)
 	for _, v := range pairs {
+
+		// if we have a blank value, it means that there are no mapped fields for this value
+		// just add it to the list with an empty list
+		if len( v.B ) == 0 {
+			results = append( results, api.DepartmentMap{ Department: v.A, Degrees: []string{}})
+			continue
+		}
+
+		// otherwise, see if we have already got a mapped value and if so append it to the list or create a new
+		// entry with a single mapped value
 		ix := indexOf(results, v.A)
 		if ix >= 0 {
 			results[ix].Degrees = append(results[ix].Degrees, v.B)
@@ -40,7 +50,7 @@ func createOptionsMap(pairs []dao.StringPair) []api.DepartmentMap {
 			results = append(results, api.DepartmentMap{Department: v.A, Degrees: []string{v.B}})
 		}
 	}
-	return (results)
+	return results
 }
 
 func indexOf(options []api.DepartmentMap, option string) int {

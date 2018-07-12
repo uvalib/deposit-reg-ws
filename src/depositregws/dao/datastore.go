@@ -121,13 +121,33 @@ func (db *dbStruct) DeleteDepositRequest(id string) (int64, error) {
 }
 
 func (db *dbStruct) GetMappedOptions() ([]StringPair, error) {
+
+	// first get all the mapped options
 	rows, err := db.Query("SELECT d1.field_value, d2.field_value FROM fieldvalues d1, fieldvalues d2, fieldmaps m WHERE m.source_id = d1.id AND m.map_id = d2.id ORDER BY 1, 2 ASC")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	return optionsMapResults(rows)
+	mapped, err := optionsMapResults(rows)
+	if err != nil {
+		return nil, err
+	}
+
+	// then get the unmapped
+	rows, err = db.Query("SELECT field_value, '' FROM fieldvalues f1 WHERE f1.field_name = 'department' AND f1.id NOT IN (SELECT source_id FROM fieldmaps) ORDER BY 1 ASC")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	unmapped, err := optionsMapResults(rows)
+	if err != nil {
+		return nil, err
+	}
+
+	// merge them and return
+	return append(mapped, unmapped ...), nil
 }
 
 func (db *dbStruct) GetAllOptions() ([]StringPair, error) {

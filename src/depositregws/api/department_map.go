@@ -5,7 +5,7 @@ package api
 //
 type DepartmentMap struct {
 	Department string   `json:"department,omitempty"`
-	Degrees    []string `json:"degrees,omitempty"`
+	Degrees    []string `json:"degrees"`
 }
 
 //
