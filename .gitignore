@@ -1,9 +1,7 @@
 /.idea
-/src/github.com
-/src/golang.org
 /bin
 /pkg
 /env.*
 /scripts/load/env.*
-/src/depositregws/tests/service_test.yml
+/depositregws/tests/service_test.yml
 /buildtag.build-0
