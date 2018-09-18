@@ -30,9 +30,9 @@ var DB *dbStruct
 //
 // NewDB -- create the database singletomn
 //
-func NewDB(dbHost string, dbSecure bool, dbName string, dbUser string, dbPassword string, dbTimeout string) error {
+func NewDB(dbHost string, dbSecure string, dbName string, dbUser string, dbPassword string, dbTimeout string) error {
 
-	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowOldPasswords=1&tls=%t&timeout=%s&readTimeout=%s&writeTimeout=%s",
+	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowOldPasswords=1&tls=%s&timeout=%s&readTimeout=%s&writeTimeout=%s",
 		dbUser,
 		dbPassword,
 		dbHost,
