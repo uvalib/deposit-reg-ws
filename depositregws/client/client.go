@@ -1,10 +1,10 @@
 package client
 
 import (
-	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 	"encoding/json"
 	"fmt"
 	"github.com/parnurzeal/gorequest"
+	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -152,9 +152,9 @@ func GetOptions(endpoint string) (int, *api.Options) {
 //
 // AddOption -- calls the service add option method
 //
-func AddOption( endpoint string, option api.Option, token string ) int {
+func AddOption(endpoint string, option api.Option, token string) int {
 
-	url := fmt.Sprintf("%s/options?auth=%s", endpoint, token )
+	url := fmt.Sprintf("%s/options?auth=%s", endpoint, token)
 	//fmt.Printf( "%s\n", url )
 
 	resp, body, errs := gorequest.New().
@@ -184,9 +184,9 @@ func AddOption( endpoint string, option api.Option, token string ) int {
 //
 // AddOptionMap -- calls the service add option method
 //
-func AddOptionMap( endpoint string, optionMap api.DepartmentMap, token string ) int {
+func AddOptionMap(endpoint string, optionMap api.DepartmentMap, token string) int {
 
-	url := fmt.Sprintf("%s/optionmap?auth=%s", endpoint, token )
+	url := fmt.Sprintf("%s/optionmap?auth=%s", endpoint, token)
 	//fmt.Printf( "%s\n", url )
 
 	resp, body, errs := gorequest.New().

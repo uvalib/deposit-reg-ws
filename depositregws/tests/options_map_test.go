@@ -17,7 +17,7 @@ func TestOptionsMapHappyDay(t *testing.T) {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
 
-	ensureValidMappedOptions( t, options )
+	ensureValidMappedOptions(t, options)
 }
 
 //

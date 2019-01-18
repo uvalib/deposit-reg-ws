@@ -1,10 +1,10 @@
 package tests
 
 import (
+	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 	"github.com/uvalib/deposit-reg-ws/depositregws/client"
 	"net/http"
 	"testing"
-	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 )
 
 //
@@ -13,7 +13,7 @@ import (
 
 func TestOptionAddHappyDay(t *testing.T) {
 	expected := http.StatusOK
-	option := makeNewOption( departmentType )
+	option := makeNewOption(departmentType)
 	status := client.AddOption(cfg.Endpoint, option, goodToken)
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
@@ -29,7 +29,7 @@ func TestOptionAddEmptyOption(t *testing.T) {
 }
 
 func TestOptionAddBadToken(t *testing.T) {
-	option := makeNewOption( departmentType )
+	option := makeNewOption(departmentType)
 	expected := http.StatusForbidden
 	status := client.AddOption(cfg.Endpoint, option, badToken)
 	if status != expected {
@@ -39,7 +39,7 @@ func TestOptionAddBadToken(t *testing.T) {
 
 func TestOptionAddDuplicateOption(t *testing.T) {
 	expected := http.StatusOK
-	option := makeNewOption( departmentType )
+	option := makeNewOption(departmentType)
 	status := client.AddOption(cfg.Endpoint, option, goodToken)
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)

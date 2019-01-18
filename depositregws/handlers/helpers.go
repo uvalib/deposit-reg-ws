@@ -1,16 +1,16 @@
 package handlers
 
 import (
-	"github.com/uvalib/deposit-reg-ws/depositregws/api"
-	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
 	"encoding/json"
 	"fmt"
+	"github.com/uvalib/deposit-reg-ws/depositregws/api"
+	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
 	"log"
 	"net/http"
 	"strings"
 )
 
-func encodeStandardResponse(w http.ResponseWriter, status int, message string ) {
+func encodeStandardResponse(w http.ResponseWriter, status int, message string) {
 
 	logger.Log(fmt.Sprintf("Status: %d (%s)\n", status, message))
 	jsonAttributes(w)
@@ -78,19 +78,18 @@ func coorsAttributes(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
-func anyEmpty( params[] string ) bool {
-   for _, s := range params {
-   	  if isEmpty( s ) {
-   	  	return true
-	  }
-   }
-   return false
+func anyEmpty(params []string) bool {
+	for _, s := range params {
+		if isEmpty(s) {
+			return true
+		}
+	}
+	return false
 }
 
 func isEmpty(param string) bool {
 	return len(strings.TrimSpace(param)) == 0
 }
-
 
 //
 // end of file

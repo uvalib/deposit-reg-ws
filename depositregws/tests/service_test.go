@@ -1,16 +1,16 @@
 package tests
 
 import (
+	"fmt"
 	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 	"github.com/uvalib/deposit-reg-ws/depositregws/client"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"strings"
 	"testing"
-	"fmt"
-	"math/rand"
 	"time"
 )
 
@@ -107,27 +107,27 @@ func makeMultiRegistration() api.Registration {
 		Degree:     "Ph.D"}
 }
 
-func makeNewOption( optionType string ) api.Option {
+func makeNewOption(optionType string) api.Option {
 	return api.Option{
 		Option: optionType,
-		Value: fmt.Sprintf( "%s-%s", optionType, randomValue( ) ),
+		Value:  fmt.Sprintf("%s-%s", optionType, randomValue()),
 	}
 }
 
-func makeOptionMap( department string, degrees [] string ) api.DepartmentMap {
+func makeOptionMap(department string, degrees []string) api.DepartmentMap {
 	return api.DepartmentMap{
 		Department: department,
-		Degrees: degrees,
+		Degrees:    degrees,
 	}
 }
 
-func randomValue( ) string {
+func randomValue() string {
 
 	// see the RNG
 	rand.Seed(time.Now().UnixNano())
 
 	// list of possible characters
-	possible := []rune( numericChars )
+	possible := []rune(numericChars)
 
 	return randomString(possible, 10)
 }
