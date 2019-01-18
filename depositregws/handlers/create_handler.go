@@ -1,13 +1,13 @@
 package handlers
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 	"github.com/uvalib/deposit-reg-ws/depositregws/authtoken"
 	"github.com/uvalib/deposit-reg-ws/depositregws/config"
 	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
 	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
-	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -56,7 +56,7 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 	for _, u := range users {
 
 		reg.For = strings.TrimSpace(u)
-		rg, err := dao.DB.CreateDepositRequest(reg)
+		rg, err := dao.Store.CreateDepositRequest(reg)
 		if err != nil {
 			logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 			status := http.StatusInternalServerError

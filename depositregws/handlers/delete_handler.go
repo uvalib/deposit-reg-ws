@@ -1,12 +1,12 @@
 package handlers
 
 import (
+	"fmt"
+	"github.com/gorilla/mux"
 	"github.com/uvalib/deposit-reg-ws/depositregws/authtoken"
 	"github.com/uvalib/deposit-reg-ws/depositregws/config"
 	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
 	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
-	"fmt"
-	"github.com/gorilla/mux"
 	"net/http"
 )
 
@@ -34,7 +34,7 @@ func RegistrationDelete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get the request details
-	count, err := dao.DB.DeleteDepositRequest(id)
+	count, err := dao.Store.DeleteDepositRequest(id)
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError

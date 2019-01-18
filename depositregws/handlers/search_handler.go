@@ -1,11 +1,11 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/uvalib/deposit-reg-ws/depositregws/authtoken"
 	"github.com/uvalib/deposit-reg-ws/depositregws/config"
 	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
 	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
-	"fmt"
 	"net/http"
 )
 
@@ -32,7 +32,7 @@ func RegistrationSearch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get the request details
-	reqs, err := dao.DB.SearchDepositRequest(id)
+	reqs, err := dao.Store.SearchDepositRequest(id)
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError

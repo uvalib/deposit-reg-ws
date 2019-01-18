@@ -1,16 +1,16 @@
 package handlers
 
 import (
-	"net/http"
+	"encoding/json"
+	"fmt"
+	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 	"github.com/uvalib/deposit-reg-ws/depositregws/authtoken"
 	"github.com/uvalib/deposit-reg-ws/depositregws/config"
-	"encoding/json"
-	"github.com/uvalib/deposit-reg-ws/depositregws/api"
+	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
 	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
-	"fmt"
 	"io"
 	"io/ioutil"
-	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
+	"net/http"
 	"strings"
 )
 
@@ -49,19 +49,19 @@ func OptionMapUpdate(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	// payload OK ?
-	if isEmpty( optionMap.Department ) == true || anyEmpty( optionMap.Degrees ) == true {
+	if isEmpty(optionMap.Department) == true || anyEmpty(optionMap.Degrees) == true {
 		status := http.StatusBadRequest
 		encodeStandardResponse(w, status, http.StatusText(status))
 		return
 	}
 
 	// update the option map
-	err := dao.DB.UpdateOptionMap( optionMap )
+	err := dao.Store.UpdateOptionMap(optionMap)
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError
 		// check for a value not found
-		if strings.Contains( err.Error( ), "does not exist" ) == true {
+		if strings.Contains(err.Error(), "does not exist") == true {
 			status = http.StatusNotFound
 		}
 		encodeStandardResponse(w, status,

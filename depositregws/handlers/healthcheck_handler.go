@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
-	"net/http"
-	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
 	"fmt"
+	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
+	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
+	"net/http"
 )
 
 //
@@ -12,9 +12,9 @@ import (
 //
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
 
-	err := dao.DB.CheckDB()
+	err := dao.Store.Check()
 	if err != nil {
-		logger.Log(fmt.Sprintf( "ERROR: Database reports '%s'", err.Error() ) )
+		logger.Log(fmt.Sprintf("ERROR: Datastore reports '%s'", err.Error()))
 		encodeHealthCheckResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}

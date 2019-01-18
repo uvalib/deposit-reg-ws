@@ -1,11 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"github.com/uvalib/deposit-reg-ws/depositregws/config"
 	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
 	"github.com/uvalib/deposit-reg-ws/depositregws/handlers"
 	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -15,14 +15,8 @@ func main() {
 
 	logger.Log(fmt.Sprintf("===> version: '%s' <===", handlers.Version()))
 
-	// access the database
-	err := dao.NewDB(
-		config.Configuration.DbHost,
-		config.Configuration.DbSecure,
-		config.Configuration.DbName,
-		config.Configuration.DbUser,
-		config.Configuration.DbPassphrase,
-		config.Configuration.DbTimeout)
+	// create the storage singleton
+	err := dao.NewDatastore()
 	if err != nil {
 		log.Fatal(err)
 	}

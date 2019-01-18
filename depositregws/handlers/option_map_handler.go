@@ -1,10 +1,10 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
 	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
-	"fmt"
 	"net/http"
 )
 
@@ -13,7 +13,7 @@ import (
 //
 func OptionMapGet(w http.ResponseWriter, r *http.Request) {
 
-	optionsSet, err := dao.DB.GetMappedOptions()
+	optionsSet, err := dao.Store.GetMappedOptions()
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError
@@ -36,8 +36,8 @@ func createOptionsMap(pairs []dao.StringPair) []api.DepartmentMap {
 
 		// if we have a blank value, it means that there are no mapped fields for this value
 		// just add it to the list with an empty list
-		if len( v.B ) == 0 {
-			results = append( results, api.DepartmentMap{ Department: v.A, Degrees: []string{}})
+		if len(v.B) == 0 {
+			results = append(results, api.DepartmentMap{Department: v.A, Degrees: []string{}})
 			continue
 		}
 

@@ -1,10 +1,10 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/uvalib/deposit-reg-ws/depositregws/api"
 	"github.com/uvalib/deposit-reg-ws/depositregws/dao"
 	"github.com/uvalib/deposit-reg-ws/depositregws/logger"
-	"fmt"
 	"net/http"
 )
 
@@ -13,7 +13,7 @@ import (
 //
 func OptionsGet(w http.ResponseWriter, r *http.Request) {
 
-	optionsSet, err := dao.DB.GetAllOptions()
+	optionsSet, err := dao.Store.GetAllOptions()
 	if err != nil {
 		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
 		status := http.StatusInternalServerError
