@@ -41,9 +41,9 @@ func newDBStore() (Storage, error) {
 	}
 
 	//taken from https://github.com/go-sql-driver/mysql/issues/461
-	db.SetConnMaxLifetime( time.Minute * 5 )
-	db.SetMaxIdleConns(2 )
-	db.SetMaxOpenConns(2 )
+	db.SetConnMaxLifetime(time.Minute * 5)
+	db.SetMaxIdleConns(2)
+	db.SetMaxOpenConns(2)
 
 	return &storage{db}, nil
 }
