@@ -14,7 +14,7 @@ import (
 func TestCreateRequestSingle(t *testing.T) {
 	reg := makeSingleRegistration()
 	expected := http.StatusOK
-	status, details := client.CreateDepositRequest(cfg.Endpoint, reg, goodToken)
+	status, details := client.CreateDepositRequest(cfg.Endpoint, reg, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -29,7 +29,7 @@ func TestCreateRequestSingle(t *testing.T) {
 func TestCreateRequestMulti(t *testing.T) {
 	reg := makeMultiRegistration()
 	expected := http.StatusOK
-	status, details := client.CreateDepositRequest(cfg.Endpoint, reg, goodToken)
+	status, details := client.CreateDepositRequest(cfg.Endpoint, reg, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -43,7 +43,7 @@ func TestCreateRequestMulti(t *testing.T) {
 
 func TestCreateRequestBadRegistration(t *testing.T) {
 	expected := http.StatusBadRequest
-	status, _ := client.CreateDepositRequest(cfg.Endpoint, api.Registration{}, goodToken)
+	status, _ := client.CreateDepositRequest(cfg.Endpoint, api.Registration{}, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -52,7 +52,7 @@ func TestCreateRequestBadRegistration(t *testing.T) {
 func TestCreateRequestBadToken(t *testing.T) {
 	reg := makeSingleRegistration()
 	expected := http.StatusForbidden
-	status, _ := client.CreateDepositRequest(cfg.Endpoint, reg, badToken)
+	status, _ := client.CreateDepositRequest(cfg.Endpoint, reg, badToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}

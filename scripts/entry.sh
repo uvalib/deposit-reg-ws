@@ -4,8 +4,7 @@ DBHOST_OPT=""
 DBNAME_OPT=""
 DBUSER_OPT=""
 DBPASSWD_OPT=""
-TOKENURL_OPT=""
-TIMEOUT_OPT=""
+SECRET_OPT=""
 DEBUG_OPT=""
 
 # secure database access
@@ -33,14 +32,9 @@ if [ -n "$DBPASSWD" ]; then
    DBPASSWD_OPT="--dbpassword $DBPASSWD"
 fi
 
-# token authentication service URL
-if [ -n "$TOKENAUTH_URL" ]; then
-   TOKENURL_OPT="--tokenauth $TOKENAUTH_URL"
-fi
-
-# service timeout
-if [ -n "$SERVICE_TIMEOUT" ]; then
-   TIMEOUT_OPT="--timeout $SERVICE_TIMEOUT"
+# shared secret
+if [ -n "$AUTH_SHARED_SECRET" ]; then
+   SECRET_OPT="--secret $AUTH_SHARED_SECRET"
 fi
 
 # service debugging
@@ -48,7 +42,7 @@ if [ -n "$DEPOSITREG_DEBUG" ]; then
    DEBUG_OPT="--debug=$DEPOSITREG_DEBUG"
 fi
 
-bin/deposit-reg-ws $DBSECURE_OPT $DBHOST_OPT $DBNAME_OPT $DBUSER_OPT $DBPASSWD_OPT $TOKENURL_OPT $TIMEOUT_OPT $DEBUG_OPT
+bin/deposit-reg-ws $DBSECURE_OPT $DBHOST_OPT $DBNAME_OPT $DBUSER_OPT $DBPASSWD_OPT $SECRET_OPT $DEBUG_OPT
 
 #
 # end of file

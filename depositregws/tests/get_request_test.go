@@ -12,7 +12,7 @@ import (
 
 func TestGetRequestHappyDay(t *testing.T) {
 	expected := http.StatusOK
-	status, details := client.GetDepositRequest(cfg.Endpoint, goodID, goodToken)
+	status, details := client.GetDepositRequest(cfg.Endpoint, goodID, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -21,7 +21,7 @@ func TestGetRequestHappyDay(t *testing.T) {
 
 func TestGetRequestEmptyId(t *testing.T) {
 	expected := http.StatusBadRequest
-	status, _ := client.GetDepositRequest(cfg.Endpoint, empty, goodToken)
+	status, _ := client.GetDepositRequest(cfg.Endpoint, empty, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -29,7 +29,7 @@ func TestGetRequestEmptyId(t *testing.T) {
 
 func TestGetRequestNotFoundId(t *testing.T) {
 	expected := http.StatusNotFound
-	status, _ := client.GetDepositRequest(cfg.Endpoint, notFoundID, goodToken)
+	status, _ := client.GetDepositRequest(cfg.Endpoint, notFoundID, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -37,7 +37,7 @@ func TestGetRequestNotFoundId(t *testing.T) {
 
 func TestGetRequestBadToken(t *testing.T) {
 	expected := http.StatusForbidden
-	status, _ := client.GetDepositRequest(cfg.Endpoint, goodID, badToken)
+	status, _ := client.GetDepositRequest(cfg.Endpoint, goodID, badToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}

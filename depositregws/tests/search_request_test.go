@@ -12,7 +12,7 @@ import (
 
 func TestSearchRequestHappyDay(t *testing.T) {
 	expected := http.StatusOK
-	status, details := client.SearchDepositRequest(cfg.Endpoint, "0", goodToken)
+	status, details := client.SearchDepositRequest(cfg.Endpoint, "0", goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -21,7 +21,7 @@ func TestSearchRequestHappyDay(t *testing.T) {
 
 func TestSearchRequestEmptyId(t *testing.T) {
 	expected := http.StatusBadRequest
-	status, _ := client.SearchDepositRequest(cfg.Endpoint, empty, goodToken)
+	status, _ := client.SearchDepositRequest(cfg.Endpoint, empty, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -29,7 +29,7 @@ func TestSearchRequestEmptyId(t *testing.T) {
 
 func TestSearchRequestBadToken(t *testing.T) {
 	expected := http.StatusForbidden
-	status, _ := client.SearchDepositRequest(cfg.Endpoint, goodID, badToken)
+	status, _ := client.SearchDepositRequest(cfg.Endpoint, goodID, badToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}

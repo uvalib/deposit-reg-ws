@@ -14,7 +14,7 @@ import (
 func TestOptionAddHappyDay(t *testing.T) {
 	expected := http.StatusOK
 	option := makeNewOption(departmentType)
-	status := client.AddOption(cfg.Endpoint, option, goodToken)
+	status := client.AddOption(cfg.Endpoint, option, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -22,7 +22,7 @@ func TestOptionAddHappyDay(t *testing.T) {
 
 func TestOptionAddEmptyOption(t *testing.T) {
 	expected := http.StatusBadRequest
-	status := client.AddOption(cfg.Endpoint, api.Option{}, goodToken)
+	status := client.AddOption(cfg.Endpoint, api.Option{}, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -31,7 +31,7 @@ func TestOptionAddEmptyOption(t *testing.T) {
 func TestOptionAddBadToken(t *testing.T) {
 	option := makeNewOption(departmentType)
 	expected := http.StatusForbidden
-	status := client.AddOption(cfg.Endpoint, option, badToken)
+	status := client.AddOption(cfg.Endpoint, option, badToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -40,13 +40,13 @@ func TestOptionAddBadToken(t *testing.T) {
 func TestOptionAddDuplicateOption(t *testing.T) {
 	expected := http.StatusOK
 	option := makeNewOption(departmentType)
-	status := client.AddOption(cfg.Endpoint, option, goodToken)
+	status := client.AddOption(cfg.Endpoint, option, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
 
 	expected = http.StatusUnprocessableEntity
-	status = client.AddOption(cfg.Endpoint, option, goodToken)
+	status = client.AddOption(cfg.Endpoint, option, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}

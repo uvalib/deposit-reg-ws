@@ -13,7 +13,7 @@ import (
 func TestDeleteRequestHappyDay(t *testing.T) {
 	newID := createNewReg(t)
 	expected := http.StatusOK
-	status := client.DeleteDepositRequest(cfg.Endpoint, newID, goodToken)
+	status := client.DeleteDepositRequest(cfg.Endpoint, newID, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -21,7 +21,7 @@ func TestDeleteRequestHappyDay(t *testing.T) {
 
 func TestDeleteRequestEmptyId(t *testing.T) {
 	expected := http.StatusBadRequest
-	status := client.DeleteDepositRequest(cfg.Endpoint, empty, goodToken)
+	status := client.DeleteDepositRequest(cfg.Endpoint, empty, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -29,7 +29,7 @@ func TestDeleteRequestEmptyId(t *testing.T) {
 
 func TestDeleteRequestNotFoundId(t *testing.T) {
 	expected := http.StatusNotFound
-	status := client.DeleteDepositRequest(cfg.Endpoint, notFoundID, goodToken)
+	status := client.DeleteDepositRequest(cfg.Endpoint, notFoundID, goodToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
@@ -37,7 +37,7 @@ func TestDeleteRequestNotFoundId(t *testing.T) {
 
 func TestDeleteRequestBadToken(t *testing.T) {
 	expected := http.StatusForbidden
-	status := client.DeleteDepositRequest(cfg.Endpoint, goodID, badToken)
+	status := client.DeleteDepositRequest(cfg.Endpoint, goodID, badToken(cfg.Secret))
 	if status != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, status)
 	}
