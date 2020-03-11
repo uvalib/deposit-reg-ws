@@ -52,7 +52,7 @@ func loadConfig() Config {
 	logger.Log(fmt.Sprintf("DbPassphrase:      %s", strings.Repeat("*", len(c.DbPassphrase))))
 	logger.Log(fmt.Sprintf("DbTimeout:         %s", c.DbTimeout))
 	logger.Log(fmt.Sprintf("SharedSecret:      %s", strings.Repeat("*", len(c.SharedSecret))))
-	logger.Log(fmt.Sprintf("Debug              %t", c.Debug))
+	logger.Log(fmt.Sprintf("Debug:             %t", c.Debug))
 
 	return c
 }
