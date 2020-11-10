@@ -36,7 +36,7 @@ func RegistrationDelete(w http.ResponseWriter, r *http.Request) {
 	// get the request details
 	count, err := dao.Store.DeleteDepositRequest(id)
 	if err != nil {
-		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
+		logger.Log(fmt.Sprintf("ERROR: %s", err.Error()))
 		status := http.StatusInternalServerError
 		encodeRegistrationResponse(w, status,
 			fmt.Sprintf("%s (%s)", http.StatusText(status), err),

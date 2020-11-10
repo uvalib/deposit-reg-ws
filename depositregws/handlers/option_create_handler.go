@@ -58,7 +58,7 @@ func OptionCreate(w http.ResponseWriter, r *http.Request) {
 	// create the new option
 	err := dao.Store.CreateOption(option)
 	if err != nil {
-		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
+		logger.Log(fmt.Sprintf("ERROR: %s", err.Error()))
 		status := http.StatusInternalServerError
 		// check for a constraint violation
 		if strings.Contains(err.Error(), "Duplicate entry") == true {

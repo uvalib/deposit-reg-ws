@@ -58,7 +58,7 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 		reg.For = strings.TrimSpace(u)
 		rg, err := dao.Store.CreateDepositRequest(reg)
 		if err != nil {
-			logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
+			logger.Log(fmt.Sprintf("ERROR: %s", err.Error()))
 			status := http.StatusInternalServerError
 			encodeRegistrationResponse(w, status,
 				fmt.Sprintf("%s (%s)", http.StatusText(status), err),

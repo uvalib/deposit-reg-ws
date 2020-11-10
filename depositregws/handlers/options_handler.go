@@ -15,7 +15,7 @@ func OptionsGet(w http.ResponseWriter, r *http.Request) {
 
 	optionsSet, err := dao.Store.GetAllOptions()
 	if err != nil {
-		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
+		logger.Log(fmt.Sprintf("ERROR: %s", err.Error()))
 		status := http.StatusInternalServerError
 		encodeOptionsResponse(w, status,
 			fmt.Sprintf("%s (%s)", http.StatusText(status), err),

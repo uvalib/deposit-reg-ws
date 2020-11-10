@@ -12,7 +12,7 @@ import (
 
 func encodeStandardResponse(w http.ResponseWriter, status int, message string) {
 
-	logger.Log(fmt.Sprintf("Status: %d (%s)\n", status, message))
+	logger.Log(fmt.Sprintf("INFO: status: %d (%s)", status, message))
 	jsonAttributes(w)
 	coorsAttributes(w)
 	w.WriteHeader(status)
@@ -23,7 +23,7 @@ func encodeStandardResponse(w http.ResponseWriter, status int, message string) {
 
 func encodeRegistrationResponse(w http.ResponseWriter, status int, message string, details []*api.Registration) {
 
-	logger.Log(fmt.Sprintf("Status: %d (%s)\n", status, message))
+	logger.Log(fmt.Sprintf("INFO: status: %d (%s)", status, message))
 	jsonAttributes(w)
 	coorsAttributes(w)
 	w.WriteHeader(status)

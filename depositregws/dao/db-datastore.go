@@ -283,7 +283,7 @@ func depositRequestResults(rows *sql.Rows) ([]*api.Registration, error) {
 		return nil, err
 	}
 
-	logger.Log(fmt.Sprintf("Deposit registration request returns %d row(s)", len(results)))
+	logger.Log(fmt.Sprintf("INFO: deposit registration request returns %d row(s)", len(results)))
 	return results, nil
 }
 
@@ -300,7 +300,7 @@ func optionsMapResults(rows *sql.Rows) ([]StringPair, error) {
 		results = append(results, StringPair{A: school, B: degree})
 	}
 
-	logger.Log(fmt.Sprintf("Options map request returns %d row(s)", len(results)))
+	logger.Log(fmt.Sprintf("INFO: options map request returns %d row(s)", len(results)))
 	return results, nil
 }
 
@@ -317,7 +317,7 @@ func optionsResults(rows *sql.Rows) ([]StringPair, error) {
 		results = append(results, StringPair{A: name, B: value})
 	}
 
-	logger.Log(fmt.Sprintf("Options request returns %d row(s)", len(results)))
+	logger.Log(fmt.Sprintf("INFO: options request returns %d row(s)", len(results)))
 	return results, nil
 }
 

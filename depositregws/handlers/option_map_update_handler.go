@@ -58,7 +58,7 @@ func OptionMapUpdate(w http.ResponseWriter, r *http.Request) {
 	// update the option map
 	err := dao.Store.UpdateOptionMap(optionMap)
 	if err != nil {
-		logger.Log(fmt.Sprintf("ERROR: %s\n", err.Error()))
+		logger.Log(fmt.Sprintf("ERROR: %s", err.Error()))
 		status := http.StatusInternalServerError
 		// check for a value not found
 		if strings.Contains(err.Error(), "does not exist") == true {
