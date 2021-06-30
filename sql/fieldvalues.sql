@@ -10,7 +10,7 @@ CREATE TABLE fieldvalues(
 ) CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- set of department values
-INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Curry School of Education");
+INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","School of Education and Human Development");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Department of Anthropology");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Department of Architectural History");
 INSERT INTO fieldvalues( field_name, field_value ) VALUES( "department","Department of Art");
