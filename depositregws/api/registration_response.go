@@ -1,8 +1,6 @@
 package api
 
-//
 // RegistrationResponse -- the basic response
-//
 type RegistrationResponse struct {
 	Status  int             `json:"status"`
 	Message string          `json:"message"`

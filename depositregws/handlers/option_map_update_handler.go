@@ -14,9 +14,7 @@ import (
 	"strings"
 )
 
-//
 // OptionMapUpdate -- update an existing option map request handler
-//
 func OptionMapUpdate(w http.ResponseWriter, r *http.Request) {
 
 	token := r.URL.Query().Get("auth")

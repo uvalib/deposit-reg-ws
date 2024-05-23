@@ -14,9 +14,7 @@ import (
 var debugHTTP = false
 var serviceTimeout = 5
 
-//
 // HealthCheck -- calls the service health check method
-//
 func HealthCheck(endpoint string) int {
 
 	url := fmt.Sprintf("%s/healthcheck", endpoint)
@@ -38,9 +36,7 @@ func HealthCheck(endpoint string) int {
 	return resp.StatusCode
 }
 
-//
 // VersionCheck -- calls the service version check method
-//
 func VersionCheck(endpoint string) (int, string) {
 
 	url := fmt.Sprintf("%s/version", endpoint)
@@ -68,9 +64,7 @@ func VersionCheck(endpoint string) (int, string) {
 	return resp.StatusCode, r.Version
 }
 
-//
 // MetricsCheck -- calls the service metrics method
-//
 func MetricsCheck(endpoint string) (int, string) {
 
 	url := fmt.Sprintf("%s/metrics", endpoint)
@@ -89,9 +83,7 @@ func MetricsCheck(endpoint string) (int, string) {
 	return resp.StatusCode, body
 }
 
-//
 // GetMappedOptions -- calls the service get the mapped options method
-//
 func GetMappedOptions(endpoint string) (int, []api.DepartmentMap) {
 
 	url := fmt.Sprintf("%s/optionmap", endpoint)
@@ -119,9 +111,7 @@ func GetMappedOptions(endpoint string) (int, []api.DepartmentMap) {
 	return resp.StatusCode, r.Options
 }
 
-//
 // GetOptions -- calls the service get the options method
-//
 func GetOptions(endpoint string) (int, *api.Options) {
 
 	url := fmt.Sprintf("%s/options", endpoint)
@@ -149,9 +139,7 @@ func GetOptions(endpoint string) (int, *api.Options) {
 	return resp.StatusCode, &r.Options
 }
 
-//
 // AddOption -- calls the service add option method
-//
 func AddOption(endpoint string, option api.Option, token string) int {
 
 	url := fmt.Sprintf("%s/options?auth=%s", endpoint, token)
@@ -181,9 +169,7 @@ func AddOption(endpoint string, option api.Option, token string) int {
 	return resp.StatusCode
 }
 
-//
 // AddOptionMap -- calls the service add option method
-//
 func AddOptionMap(endpoint string, optionMap api.DepartmentMap, token string) int {
 
 	url := fmt.Sprintf("%s/optionmap?auth=%s", endpoint, token)
@@ -213,9 +199,7 @@ func AddOptionMap(endpoint string, optionMap api.DepartmentMap, token string) in
 	return resp.StatusCode
 }
 
-//
 // GetDepositRequest -- calls the service get deposit request method
-//
 func GetDepositRequest(endpoint string, id string, token string) (int, []*api.Registration) {
 
 	url := fmt.Sprintf("%s/%s?auth=%s", endpoint, id, token)
@@ -243,9 +227,7 @@ func GetDepositRequest(endpoint string, id string, token string) (int, []*api.Re
 	return resp.StatusCode, r.Details
 }
 
-//
 // SearchDepositRequest -- calls the service search deposit request method
-//
 func SearchDepositRequest(endpoint string, id string, token string) (int, []*api.Registration) {
 
 	url := fmt.Sprintf("%s?auth=%s&later=%s", endpoint, token, id)
@@ -273,9 +255,7 @@ func SearchDepositRequest(endpoint string, id string, token string) (int, []*api
 	return resp.StatusCode, r.Details
 }
 
-//
 // CreateDepositRequest -- calls the service create deposit request method
-//
 func CreateDepositRequest(endpoint string, reg api.Registration, token string) (int, []*api.Registration) {
 
 	url := fmt.Sprintf("%s?auth=%s", endpoint, token)
@@ -309,9 +289,7 @@ func CreateDepositRequest(endpoint string, reg api.Registration, token string) (
 	return resp.StatusCode, r.Details
 }
 
-//
 // DeleteDepositRequest -- calls the service delete deposit request method
-//
 func DeleteDepositRequest(endpoint string, id string, token string) int {
 
 	url := fmt.Sprintf("%s/%s?auth=%s", endpoint, id, token)

@@ -8,9 +8,7 @@ import (
 	"net/http"
 )
 
-//
 // OptionsGet -- get options request handler
-//
 func OptionsGet(w http.ResponseWriter, r *http.Request) {
 
 	optionsSet, err := dao.Store.GetAllOptions()

@@ -14,9 +14,7 @@ import (
 	"strings"
 )
 
-//
 // OptionCreate -- create a new option request handler
-//
 func OptionCreate(w http.ResponseWriter, r *http.Request) {
 
 	token := r.URL.Query().Get("auth")

@@ -10,9 +10,7 @@ import (
 	"net/http"
 )
 
-//
 // RegistrationGet - get registration handler
-//
 func RegistrationGet(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)

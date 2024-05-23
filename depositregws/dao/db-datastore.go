@@ -17,9 +17,7 @@ type storage struct {
 	*sql.DB
 }
 
-//
 // newDBStore -- create the database singletomn
-//
 func newDBStore() (Storage, error) {
 
 	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowOldPasswords=1&tls=%s&timeout=%s&readTimeout=%s&writeTimeout=%s",
@@ -48,9 +46,7 @@ func newDBStore() (Storage, error) {
 	return &storage{db}, nil
 }
 
-//
 // CheckDB -- check our database health
-//
 func (s *storage) Check() error {
 	return s.Ping()
 }

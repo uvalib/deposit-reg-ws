@@ -1,8 +1,6 @@
 package api
 
-//
 // Registration -- details of an optional registration
-//
 type Registration struct {
 	ID          string `json:"id,omitempty"`
 	Requester   string `json:"requester,omitempty"`

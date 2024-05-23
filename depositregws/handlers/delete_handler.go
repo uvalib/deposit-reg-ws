@@ -10,9 +10,7 @@ import (
 	"net/http"
 )
 
-//
 // RegistrationDelete - registration delete handler
-//
 func RegistrationDelete(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)

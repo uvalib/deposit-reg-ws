@@ -9,9 +9,7 @@ import (
 	"net/http"
 )
 
-//
 // RegistrationSearch -- the search registration handler
-//
 func RegistrationSearch(w http.ResponseWriter, r *http.Request) {
 
 	token := r.URL.Query().Get("auth")

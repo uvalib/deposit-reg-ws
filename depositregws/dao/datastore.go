@@ -18,9 +18,7 @@ type Storage interface {
 	//Destroy() error
 }
 
-//
 // StringPair -- used for some results; not idiomatic
-//
 type StringPair struct {
 	A string
 	B string

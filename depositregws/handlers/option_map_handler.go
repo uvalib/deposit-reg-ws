@@ -8,9 +8,7 @@ import (
 	"net/http"
 )
 
-//
 // OptionMapGet -- get option map request handler
-//
 func OptionMapGet(w http.ResponseWriter, r *http.Request) {
 
 	optionsSet, err := dao.Store.GetMappedOptions()

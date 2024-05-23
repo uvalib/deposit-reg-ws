@@ -14,9 +14,7 @@ import (
 	"strings"
 )
 
-//
 // RegistrationCreate -- create registration handler
-//
 func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 
 	token := r.URL.Query().Get("auth")
@@ -73,9 +71,7 @@ func RegistrationCreate(w http.ResponseWriter, r *http.Request) {
 	encodeRegistrationResponse(w, status, http.StatusText(status), results)
 }
 
-//
 // RegistrationCreateOptions -- create registration options handler
-//
 func RegistrationCreateOptions(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Methods", "POST")
 	encodeRegistrationResponse(w, http.StatusOK, http.StatusText(http.StatusOK), nil)
